@@ -26,6 +26,7 @@ CONSTANTS lc_pi(12) TYPE p DECIMALS 9 VALUE '3.141592653'.
 *WRITE: '2 para Triângulo.', ld_opcao LEFT-JUSTIFIED.
 
 "A ideia é fazer uma lista de áreas a ser calculadas, o usuário após selecionar, é automaticamente encaminhado.
+"Teste 1
 
 
 WRITE:(21) 'O valor do raio: ', ld_raio LEFT-JUSTIFIED.
