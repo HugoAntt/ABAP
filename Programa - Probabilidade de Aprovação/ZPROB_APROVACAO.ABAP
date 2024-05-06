@@ -7,18 +7,27 @@
 *** Ini - HUGOANSILVA e ARTHURSANTOS - TEXTO - 09.04.2024 14:57:27 ***
 REPORT zprob_aprovacao.
 
-DATA lo_alv               TYPE REF TO cl_salv_table.
-DATA lex_message          TYPE REF TO cx_salv_msg.
-DATA lo_layout_settings   TYPE REF TO cl_salv_layout.
-DATA lo_layout_key        TYPE        salv_s_layout_key.
-DATA lo_columns           TYPE REF TO cl_salv_columns_table.
-DATA lo_column            TYPE REF TO cl_salv_column.
-DATA lex_not_found        TYPE REF TO cx_salv_not_found.
-DATA lo_functions         TYPE REF TO cl_salv_functions_list.
-DATA lo_display_settings  TYPE REF TO cl_salv_display_settings.
+DATA: lo_alv              TYPE REF TO cl_salv_table,
+      lex_message         TYPE REF TO cx_salv_msg,
+      lo_layout_settings  TYPE REF TO cl_salv_layout,
+      lo_layout_key       TYPE        salv_s_layout_key,
+      lo_columns          TYPE REF TO cl_salv_columns_table,
+      lo_column           TYPE REF TO cl_salv_column,
+      lex_not_found       TYPE REF TO cx_salv_not_found,
+      lo_functions        TYPE REF TO cl_salv_functions_list,
+      lo_display_settings TYPE REF TO cl_salv_display_settings,
+      ld_faltas           TYPE string.
 
 
-DATA: ld_faltas TYPE string.
+*
+*"o Type precisa estar relacionao ao parametro do método, nesse caso: znota.
+*DATA:
+*  nota1 TYPE znota,
+*  nota2 TYPE znota,
+*  nota3 TYPE znota,
+*  nota4 TYPE znota.
+
+DATA(lo_Calc) = NEW zcl_regras_school( ). " Crie uma instância da classe
 
 "EXIBIÇÃO DA TELA DE PESQUISA"
 SELECTION-SCREEN BEGIN OF BLOCK b1.
@@ -45,6 +54,8 @@ SELECTION-SCREEN END OF BLOCK b1.
 *  ON a~id = n~id_aluno
 *    INTO lv_count_notas
 *  WHERE a~id = id.
+
+
 
 
 DATA(lo_faltas) = NEW zcl_regras_school( ). " Crie uma instância da classe
@@ -84,15 +95,6 @@ DATA: lt_prob              TYPE TABLE OF ty_prob,
       ls_prob              TYPE ty_prob,
       lv_current_discplina TYPE zdiscplina-nome_discplina,
       l_index              TYPE sy-tabix.
-*
-*"o Type precisa estar relacionao ao parametro do método, nesse caso: znota.
-*DATA:
-*  nota1 TYPE znota,
-*  nota2 TYPE znota,
-*  nota3 TYPE znota,
-*  nota4 TYPE znota.
-
-DATA(lo_Calc) = NEW zcl_regras_school( ). " Crie uma instância da classe
 
 LOOP AT lt_zprob INTO DATA(ls_zprob).
   "Verifica discplina atual
@@ -241,4 +243,4 @@ lo_alv->display( ).
 *
 *
 *
-** * Fim - HUGOANSILVA e ARTHURSANTOS ***
+** * Fim - HUGOANSILVA e ARTHURSANTOS ***z
