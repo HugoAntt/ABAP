@@ -30,62 +30,39 @@ SELECTION-SCREEN BEGIN OF BLOCK bloco1 WITH FRAME TITLE TEXT-001.
 
 SELECTION-SCREEN END OF BLOCK bloco1.
 
-IF r_usd = 'X'.
-  moeda = 'USD'.
+CASE 'X'.
 
-ELSEIF r_eur = 'X'.
-  moeda = 'EUR'.
+  WHEN r_usd.
+    moeda = 'USD'.
 
-ELSEIF r_cad = 'X'.
-  moeda = 'CAD'.
+  WHEN r_eur.
+    moeda = 'EUR'.
 
-ELSEIF r_sek = 'X'.
-  moeda = 'SEK'.
+  WHEN r_CAD.
+    moeda = 'CAD'.
 
-ELSEIF r_jpy = 'X'.
-  moeda = 'JPY'.
+  WHEN r_SEK.
+    moeda = 'SEK'.
 
-ELSEIF r_chf = 'X'.
-  moeda = 'CHF'.
+  WHEN r_JPY.
+    moeda = 'JPY'.
 
-ELSEIF r_gbp = 'X'.
-  moeda = 'GBP'.
+  WHEN r_CHF.
+    moeda = 'CHF'.
 
-ELSEIF r_sgd = 'X'.
-  moeda = 'SGD'.
+  WHEN r_GBP.
+    moeda = 'GBP'.
 
-ELSEIF r_aud = 'X'.
-  moeda = 'AUD'.
+  WHEN r_SGD.
+    moeda = 'SGD'.
 
-ELSEIF r_zar = 'X'.
-  moeda = 'ZAR'.
+  WHEN r_AUD.
+    moeda = 'AUD'.
 
-ENDIF.
+  WHEN r_ZAR.
+    moeda = 'ZAR'.
 
-
-"Possível forma de fazer, utilizando switch case.
-*CASE sy-index.
-*  WHEN r_usd.
-*    moeda = 'USD'.
-*  WHEN r_eur.
-*    moeda = 'EUR'.
-*  WHEN r_CAD.
-*    moeda = 'CAD'.
-*  WHEN r_SEK.
-*    moeda = 'SEK'.
-*  WHEN r_JPY.
-*    moeda = 'JPY'.
-*  WHEN r_CHF.
-*    moeda = 'CHF'.
-*  WHEN r_GBP.
-*    moeda = 'GBP'.
-*  WHEN r_SGD.
-*    moeda = 'SGD'.
-*  WHEN r_AUD.
-*    moeda = 'AUD'.
-*  WHEN r_ZAR.
-*    moeda = 'ZAR'.
-*ENDCASE.
+ENDCASE.
 
 SELECT mandt,
 carrid,
