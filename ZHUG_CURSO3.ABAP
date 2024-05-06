@@ -12,6 +12,7 @@ TABLES: scarr.
 DATA w_aereo TYPE scarr.
 DATA t_aereo TYPE TABLE OF scarr. "Tabela interna
 DATA moeda TYPE c LENGTH 3.
+DATA s_currcode TYPE scarr-currcode.
 
 "Entrada de dados
 SELECTION-SCREEN BEGIN OF BLOCK bloco1 WITH FRAME TITLE TEXT-001.
@@ -29,6 +30,8 @@ SELECTION-SCREEN BEGIN OF BLOCK bloco1 WITH FRAME TITLE TEXT-001.
               r_zar RADIOBUTTON GROUP r1.
 
 SELECTION-SCREEN END OF BLOCK bloco1.
+
+
 
 CASE 'X'.
 
@@ -64,6 +67,12 @@ CASE 'X'.
 
 ENDCASE.
 
+"Alterações em prol da mensagem de erro.
+*IF moeda <> s_currcode.
+*  MESSAGE 'A moeda inserida não é compatível com a companhia aérea' TYPE 'I'.
+*  RETURN.
+*ENDIF.
+
 SELECT mandt,
 carrid,
 carrname,
@@ -86,4 +95,153 @@ ENDIF.
 
 
 
-*** Fim - HUGOANSILVA ***
+**** Fim - HUGOANSILVA ***
+
+
+"Exemplo afim da solução
+*--------------------------
+
+*REPORT zhug_curso3.
+*
+*TABLES: scarr.
+*
+*DATA w_aereo TYPE scarr.
+*
+*DATA t_aereo TYPE TABLE OF scarr. "Tabela interna
+*
+*DATA moeda TYPE c LENGTH 3.
+*
+*DATA s_currcode TYPE scarr-currcode.
+*
+*"Entrada de dados
+*
+*SELECTION-SCREEN BEGIN OF BLOCK bloco1 WITH FRAME TITLE TEXT-001.
+*
+*  SELECT-OPTIONS: s_carrid FOR scarr-carrid.
+*
+*  PARAMETERS: r_usd RADIOBUTTON GROUP r1 DEFAULT 'X',
+*
+*              r_eur RADIOBUTTON GROUP r1,
+*
+*              r_cad RADIOBUTTON GROUP r1,
+*
+*              r_sek RADIOBUTTON GROUP r1,
+*
+*              r_jpy RADIOBUTTON GROUP r1,
+*
+*              r_chf RADIOBUTTON GROUP r1,
+*
+*              r_gbp RADIOBUTTON GROUP r1,
+*
+*              r_sgd RADIOBUTTON GROUP r1,
+*
+*              r_aud RADIOBUTTON GROUP r1,
+*
+*              r_zar RADIOBUTTON GROUP r1.
+*
+*SELECTION-SCREEN END OF BLOCK bloco1.
+*
+*CASE 'X'.
+*
+*  WHEN r_usd.
+*
+*    moeda = 'USD'.
+*
+*  WHEN r_eur.
+*
+*    moeda = 'EUR'.
+*
+*  WHEN r_CAD.
+*
+*    moeda = 'CAD'.
+*
+*  WHEN r_SEK.
+*
+*    moeda = 'SEK'.
+*
+*  WHEN r_JPY.
+*
+*    moeda = 'JPY'.
+*
+*  WHEN r_CHF.
+*
+*    moeda = 'CHF'.
+*
+*  WHEN r_GBP.
+*
+*    moeda = 'GBP'.
+*
+*  WHEN r_SGD.
+*
+*    moeda = 'SGD'.
+*
+*  WHEN r_AUD.
+*
+*    moeda = 'AUD'.
+*
+*  WHEN r_ZAR.
+*
+*    moeda = 'ZAR'.
+*
+*ENDCASE.
+*
+*" Atribuir a moeda selecionada a s_currcode
+*
+*Case Moeda.
+*  WHEN 'USD'. s_currcode = 'USD.'.
+*  WHEN 'EUR'. s_currcode = 'EUR.'.
+*  WHEN 'CAD'. s_currcode = 'CAD.'.
+*  WHEN 'SEK'. s_currcode = 'SEK.'.
+*  WHEN 'JPY'. s_currcode = 'JPY.'.
+*  WHEN 'CHF'. s_currcode = 'CHF.'.
+*  WHEN 'GBP'. s_currcode = 'GBP.'.
+*  WHEN 'SGD'. s_currcode = 'SGD.'.
+*  WHEN 'AUD'. s_currcode = 'AUD.'.
+*  WHEN 'ZAR'. s_currcode = 'ZAR.'.
+*ENDCASE.
+*
+**s_currcode = moeda. " Atribuir a moeda selecionada a s_currcode
+*
+*
+*  IF NOT s_carrid[] IS INITIAL. " Verifica se a seleção de companhias aéreas não está vazia
+*
+*
+*    SELECT mandt,
+*
+*           carrid,
+*
+*           carrname,
+*
+*           currcode
+*
+*      INTO TABLE @t_aereo
+*
+*      FROM scarr
+*
+*      WHERE carrid IN @s_carrid
+*
+*        AND currcode = @s_currcode. " Verifica a compatibilidade da moeda selecionada com as companhias aéreas selecionadas
+*
+*    IF sy-subrc = 0.
+*
+*      LOOP AT t_aereo INTO w_aereo.
+*
+*        WRITE: /(17) 'Mandante: '  ,w_aereo-mandt LEFT-JUSTIFIED.
+*
+*        WRITE: /(17) 'Id: '  ,w_aereo-carrid LEFT-JUSTIFIED.
+*
+*        WRITE: /(17) 'Cia: '  ,w_aereo-carrname LEFT-JUSTIFIED.
+*
+*        WRITE: /(17) 'Codigo da Moeda: '  ,w_aereo-currcode LEFT-JUSTIFIED.
+*
+*        WRITE: /.
+*
+*      ENDLOOP.
+*
+*    ENDIF.
+*
+*  ELSE.
+*
+*    MESSAGE 'Selecione pelo menos uma companhia aérea.' TYPE 'I'. " Mensagem de erro quando nenhuma companhia aérea é selecionada
+*
+*  ENDIF.
