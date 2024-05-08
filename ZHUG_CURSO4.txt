@@ -28,9 +28,11 @@ REPORT zhug_curso4.
 
 START-OF-SELECTION.
   DATA ld_message TYPE c.
-  MESSAGE 'ERRO' TYPE 'S' DISPLAY LIKE 'E'.
+  MESSAGE e000(z_curso3).
+*  MESSAGE 'ERRO' TYPE 'S' DISPLAY LIKE 'E'.
 
-  SKIP.
+*Através da classe de mensagem. Transação SE91
+
 
   WRITE 'Fim do Programa.'.
 
