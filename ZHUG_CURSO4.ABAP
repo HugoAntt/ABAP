@@ -28,10 +28,18 @@ REPORT zhug_curso4.
 
 START-OF-SELECTION.
   DATA ld_message TYPE c.
-  MESSAGE e000(z_curso3).
+*  MESSAGE e000(z_curso3).
+  MESSAGE s001(z_curso3) WITH 'ver' 'funciona.'.
+
+
+
+AT SELECTION-SCREEN ON HELP-REQUEST FOR z_curso3.
+  MESSAGE i888 WITH 'AT SELECTION-SCREEN'
+                    'ON HELP-REQUEST FOR SEL_OPT1-HIGH'.
 *  MESSAGE 'ERRO' TYPE 'S' DISPLAY LIKE 'E'.
 
 *Através da classe de mensagem. Transação SE91
+  "Para Auxílio de programa: DEMO_SELECTION_SCREEN_EVENTS
 
 
   WRITE 'Fim do Programa.'.
