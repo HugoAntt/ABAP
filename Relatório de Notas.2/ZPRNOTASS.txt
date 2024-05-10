@@ -6,17 +6,10 @@
 REPORT zprnotass.
 *** Ini - HUGOANSILVA, ARTHUR - TEXTO - 09.05.2024 15:49:17 ***
 
-"Declaração ALV
-
-" Tela de seleção
-INCLUDE zprnotass_sel.
-"Select
-INCLUDE zprnotass_sos.
-
 TYPES: BEGIN OF ty_prob,
          id_nota         TYPE zid_nota,
          nome_aluno      TYPE znomealuno,
-         nome_disciplina TYPE z_nome_disciplina,
+         disciplina      TYPE z_nome_disciplina,
          data            TYPE zdata,
          nota1           TYPE znota,
          nota2           TYPE znota,
@@ -25,7 +18,13 @@ TYPES: BEGIN OF ty_prob,
          media_ponderada TYPE znota,
        END OF ty_prob.
 
+"Declaração ALV
 INCLUDE zprnotass_top.
+" Tela de seleção
+INCLUDE zprnotass_sel.
+"Select
+INCLUDE zprnotass_sos.
+
 
 "Tabela ALV
 " Código da Layout da ALV
@@ -48,5 +47,10 @@ lo_display_settings->set_striped_pattern( if_salv_c_bool_sap=>true ).
 lo_display_settings->set_list_header( TEXT-001 ).
 
 lo_alv->display( ).
+
+cont = 1.
+IF cont = 2.
+* 'Mensagem teste'
+ENDIF.
 
 *** Fim - HUGOANSILVA, ARTHUR  ***
