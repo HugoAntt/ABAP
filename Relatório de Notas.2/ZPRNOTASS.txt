@@ -8,7 +8,7 @@ REPORT zprnotass.
 
 TYPES: BEGIN OF ty_prob,
          id_nota         TYPE zid_nota,
-         nome_aluno      TYPE znomealuno,
+         nome_alunos     TYPE Znomealuno,
          disciplina      TYPE z_nome_disciplina,
          data            TYPE zdata,
          nota1           TYPE znota,
@@ -64,7 +64,7 @@ LOOP AT lt_zprob INTO DATA(ls_zprob).
 
     IF lv_next_disciplina-disciplina <> lv_current_discplina.
 
-      ls_prob-nome_aluno = ls_zprob-nome_aluno.
+      ls_prob-nome_alunos = ls_zprob-nome_alunos.
       ls_prob-disciplina = ls_zprob-disciplina.
 ***    MODIFICADO POR lUCAS E WENDEL
       ls_prob-nota4 = ls_zprob-nota.
@@ -86,7 +86,7 @@ LOOP AT lt_zprob INTO DATA(ls_zprob).
       ENDIF.
     ENDIF.
   ELSE.
-    ls_prob-nome_aluno = ls_zprob-nome_aluno.
+    ls_prob-nome_alunos = ls_zprob-nome_alunos.
     ls_prob-disciplina = ls_zprob-disciplina.
 
 ***    MODIFICADO POR lUCAS E WENDEL
@@ -101,11 +101,16 @@ LOOP AT lt_zprob INTO DATA(ls_zprob).
 
 ENDLOOP.
 
+TRY.
+    cl_salv_table=>factory(
+      IMPORTING
+        r_salv_table = lo_alv
+      CHANGING
+        t_table      =  lt_prob ).
 
+  CATCH cx_salv_msg INTO lex_message.
 
-
-
-
+ENDTRY.
 
 
 cont = 1.
