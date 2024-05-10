@@ -48,6 +48,66 @@ lo_display_settings->set_list_header( TEXT-001 ).
 
 lo_alv->display( ).
 
+"Loop
+LOOP AT lt_zprob INTO DATA(ls_zprob).
+  "Verifica discplina atual
+  lv_current_discplina = ls_zprob-disciplina.
+
+  "Verifica index atual da tabela
+  l_index = sy-tabix.
+
+  "Passa para o próximo index
+  READ TABLE lt_zprob INDEX ( l_index + 1 ) INTO DATA(lv_next_disciplina).
+
+  "Verifica se há uma próxima linha
+  IF sy-subrc = 0.
+
+    IF lv_next_disciplina-disciplina <> lv_current_discplina.
+
+      ls_prob-nome_aluno = ls_zprob-nome_aluno.
+      ls_prob-disciplina = ls_zprob-disciplina.
+***    MODIFICADO POR lUCAS E WENDEL
+      ls_prob-nota4 = ls_zprob-nota.
+***    FIM MODIFICAÇÃO
+      "Metodo da Média Ponderada.
+      ls_prob-media_ponderada = lo_Calc->cal_media_ponderada( n1 = ls_prob-nota1 n2 = ls_prob-nota2 n3 = ls_prob-nota3 n4 = ls_prob-nota4 ).
+
+      APPEND ls_prob TO lt_prob.
+    ELSE.
+      "Verifica bimestre atual
+      IF ls_zprob-data+4(2) BETWEEN '02' AND '03'.
+        ls_prob-nota1 = ls_zprob-nota.
+      ELSEIF ls_zprob-data+4(2) BETWEEN '04' AND '06'.
+        ls_prob-nota2 = ls_zprob-nota.
+      ELSEIF ls_zprob-data+4(2) BETWEEN '08' AND '09'.
+        ls_prob-nota3 = ls_zprob-nota.
+      ELSEIF ls_zprob-data+4(2) BETWEEN '10' AND '11'.
+        ls_prob-nota4 = ls_zprob-nota.
+      ENDIF.
+    ENDIF.
+  ELSE.
+    ls_prob-nome_aluno = ls_zprob-nome_aluno.
+    ls_prob-disciplina = ls_zprob-disciplina.
+
+***    MODIFICADO POR lUCAS E WENDEL
+    ls_prob-nota4 = ls_zprob-nota.
+***    FIM MODIFICAÇÃO
+    "Metodo da Média Ponderada.
+    ls_prob-media_ponderada = lo_Calc->cal_media_ponderada( n1 = ls_prob-nota1 n2 = ls_prob-nota2 n3 = ls_prob-nota3 n4 = ls_prob-nota4 ).
+
+    APPEND ls_prob TO lt_prob.
+
+  ENDIF.
+
+ENDLOOP.
+
+
+
+
+
+
+
+
 cont = 1.
 IF cont = 2.
 * 'Mensagem teste'
