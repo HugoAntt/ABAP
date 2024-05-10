@@ -7,10 +7,13 @@ REPORT zprnotass.
 *** Ini - HUGOANSILVA, ARTHUR - TEXTO - 09.05.2024 15:49:17 ***
 
 "Declaração ALV
-INCLUDE zprnotass_top.
+INCLUDE ZPRNOTASS_TOP.
 
 " Tela de seleção
-INCLUDE zprnotass_sel.
+INCLUDE ZPRNOTASS_SEL.
+
+"Select
+  INCLUDE ZPRNOTASS_SOS.
 
 
 "Tabela ALV
