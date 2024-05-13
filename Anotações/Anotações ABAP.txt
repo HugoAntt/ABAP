@@ -1,0 +1,133 @@
+Dia 08/04/2024
+Saptechinical
+Abapzombiee
+
+Códigos de Transações
+Claro, abaixo estão algumas das transações SAP ABAP mais comuns:
+
+1. **SE38**: Editor de Programas ABAP. Usado para criar, modificar e visualizar programas ABAP.
+
+2. **SE80**: Navegador de Objetos ABAP. Permite a navegação por diferentes tipos de objetos ABAP, como programas, classes, funções, entre outros.
+
+3. **SE11**: Dicionário de Dados ABAP. Utilizado para criar e manter objetos de dicionário de dados, como tabelas, visões, tipos de dados, entre outros.
+
+4. **SE37**: Editor de Funções. Usado para criar, modificar e visualizar funções de função (sub-rotinas) em ABAP.
+
+5. **SE24**: Editor de Classes. Permite criar, modificar e visualizar classes ABAP (usadas em programação orientada a objetos).
+
+6. **SE93**: Manutenção de Transações. Usado para criar, modificar e visualizar transações SAP.
+
+7. **SE80**: Navegador de Objetos ABAP. Utilizado para a navegação em diferentes tipos de objetos ABAP, como programas, classes, funções, entre outros.
+
+8. **SE38**: Editor de Programas ABAP. Usado para criar, modificar e visualizar programas ABAP.
+
+9. **SE80**: Navegador de Objetos ABAP. Utilizado para a navegação em diferentes tipos de objetos ABAP, como programas, classes, funções, entre outros.
+10. **SE11**: Dicionário de Dados ABAP. Utilizado para criar e manter objetos de dicionário de dados, como tabelas, visões, tipos de dados, entre outros.
+
+11. **SE37**: Editor de Funções. Usado para criar, modificar e visualizar funções de função (sub-rotinas) em ABAP.
+
+12. **SE80**: Navegador de Objetos ABAP. Utilizado para a navegação em diferentes tipos de objetos ABAP, como programas, classes, funções, entre outros.
+Componente Web Dimpro
+
+
+13. **SE38**: Editor de Programas ABAP. Usado para criar, modificar e visualizar programas ABAP.
+
+14. **SE24**: Editor de Classes. Permite criar, modificar e visualizar classes ABAP (usadas em programação orientada a objetos).
+
+Estas são apenas algumas das transações mais comuns em SAP ABAP. Existem muitas outras transações disponíveis, dependendo das necessidades específicas de desenvolvimento e administração do sistema SAP.
+
+15 . **EWK1**:
+
+16 . SEGW - Configurações no Odata
+
+17. SE91 -  Classe de Mensagem.
+
+18. SE14 - AJUSTAR TABELA
+
+
+
+paramiteres
+checkbox:Posso escolher diversos botões simunltanêos, radion button: escolha única. 
+Tabela LV.
+ctrl + u vs ctrl + l vs ctrl + d
+uppercase vs lowercase vs duplicate
+
+Tudo que é regra deverá ser moldado na Zlc regra school
+
+Match code apenas com nome do aluno,
+Campo: nome, notas, medias, e probabilidade. 
+----------------------------------------------
+Match code da tabelas Alunos: Nomes e Id. = Nomes da Tabela Id and Nome_Aluno [V]
+Match code de notas
+Média de Wendel e livia
+Criar nosso método de probabilidade.
+-----------------------------------------------	
+
+pool de módulos
+/58
+
+Leave to screen 0 
+
+
+
+Objetivos
+Entender como selecionar e armazenar os dados.
+Cursos: Udemy, galena, e-larnging e go language. 
+Cursos específicos: Abap udemy, e abap mundo youtube, dúvidas especificas. 
+
+O que falta?
+Condição frequência V
+Condição if bimestre V (Provável atribuição)
+Condição lógica metodo V + OR -
+Tabela lv V + OR -
+Design
+erro para quando nota = vazio.  
+
+
+Modify**
+Call method 
+export
+
+O que falta? (Correção)
+Calculo de média errôneo
+Possível match code de aluno e turma
+
+linha 125
+linha 152
+linha 247
+
+MVC padrão webdimpro
+
+Este trecho de código ABAP parece estar manipulando uma tabela interna ti_result e atualizando outra tabela interna ti_alv com base nos dados dessa primeira tabela. Vou explicar o que está acontecendo:
+
+LOOP AT ti_result INTO DATA(ls_result).: Este comando itera sobre cada entrada na tabela interna ti_result e armazena os valores na estrutura ls_result.
+conta_n = conta_n + 1.: Incrementa o contador conta_n a cada iteração do loop.
+O bloco IF...ELSEIF...ELSE verifica se existe uma linha na tabela ti_alv com o mesmo nome_aluno do ls_result e se conta_n é igual a 2, 3 ou 4. Se sim, atualiza os campos nota2, nota3 ou nota4 respectivamente.
+Se não existir uma linha na tabela ti_alv com o mesmo nome_aluno e conta_n for diferente de 2, 3 ou 4, então cria uma nova entrada na tabela ti_alv com os dados de ls_result, adicionando-a ao final da tabela.
+Basicamente, este código parece estar preenchendo a tabela ti_alv com informações dos alunos, sendo que se um aluno já estiver na tabela e a iteração estiver na segunda, terceira ou quarta ocorrência desse aluno, suas notas são atualizadas. Se for a primeira ocorrência, uma nova entrada para esse aluno é adicionada à tabela.
+
+pleased
+
+ctrl+f = pesquisa.
+case - when others
+
+concatenate, i
+
+when and them. 
+Includes. 
+
+
+Protegi o pacote sem querer
+para desbloquear, somente na transação se03, onde se aplica em desbloquear objetos. 
+e na SE09/SE10 através do ordem/tarefa. ordem e anular proteção. 
+
+
+O form pode servir para criação de uma variavel local. 
+EX: 
+FORM calcular_media.
+DATA ld_media(12) TYPE p DECIMALS 2.
+ld_media = (p_n1 + p_n2 + p_n3 + p_n4)/4.
+gd_media = ld_media.
+ENDFORM.
+E utiliza-se \changing\ para apenas retornar o valor se necessário.
+
