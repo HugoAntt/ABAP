@@ -1,0 +1,14 @@
+"Texto prog base 
+
+
+"Forma de armazenar variaveis em uma estrutura.
+START-OF-SELECTION 
+DATA: BEGIN OF ls_localizacao
+     ,pais(2)   type c
+     ,uf(2)     type c
+     ,cidade(2) type c
+     ,END OF ls_localizacao.
+
+
+"Funciona de armazenar todos juntos se respeitar a quantidade de limite de caracteres disponíveis. 
+  ls_localizacao = 'BRPEOlinda.
