@@ -131,3 +131,16 @@ gd_media = ld_media.
 ENDFORM.
 E utiliza-se \changing\ para apenas retornar o valor se necessário.
 
+APPEND - Quando você utiliza o comando "Append" em ABAP, você está basicamente adicionando uma nova entrada
+à tabela interna, que geralmente é feito ao final da tabela. Isso significa que você está acrescentando uma 
+nova linha com dados específicos para essa tabela.
+
+EX: DATA: ls_data TYPE TABLE_TYPE.
+
+ls_data-campo1 = 'Valor1'.
+ls_data-campo2 = 'Valor2'.
+ls_data-campo3 = 'Valor3'.
+
+APPEND ls_data TO it_tab.
+----------------------------------------------------------------------------
+"Clear" para limpeza de tabela.
