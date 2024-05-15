@@ -47,20 +47,89 @@ Aqui estão as informações organizadas e detalhadas:
   - Os radio buttons são mutuamente exclusivos, o que significa que selecionar uma opção automaticamente desmarca as outras opções do mesmo grupo.
   - É ideal para apresentar ao usuário uma lista de opções onde apenas uma escolha é permitida, como gênero (masculino/feminino), status civil (solteiro/casado/divorciado), entre outros.
 
+
+Tabelas------------
+No contexto do SAP, as tabelas internas e as tabelas transparentes são conceitos distintos em relação ao armazenamento e manipulação de dados. Aqui está a diferença entre elas:
+
+1. **Tabelas Internas:**
+
+   - **Definição:** Tabelas internas são estruturas de dados temporárias que existem apenas durante a execução de um programa ABAP.
+   
+   - **Armazenamento:** Os dados em tabelas internas são armazenados na memória do aplicativo durante a execução do programa e são descartados quando o programa é concluído.
+   
+   - **Utilização:** São amplamente utilizadas para processamento de dados temporários dentro de programas ABAP. São criadas dinamicamente e têm escopo local dentro do programa que as cria.
+   
+   - **Características:** Permitem armazenar e manipular conjuntos de dados temporários de forma eficiente durante a execução do programa. São utilizadas principalmente para armazenar resultados intermediários de processamento ou dados temporários para exibição.
+
+2. **Tabelas Transparentes:**
+
+   - **Definição:** Tabelas transparentes são estruturas de dados permanentes que armazenam informações de forma persistente no banco de dados SAP.
+   
+   - **Armazenamento:** Os dados em tabelas transparentes são armazenados no banco de dados SAP de forma persistente, ou seja, permanecem mesmo após o encerramento do programa ou reinicialização do sistema.
+   
+   - **Utilização:** São usadas para armazenar dados de forma permanente no sistema SAP, como dados mestres (clientes, fornecedores, materiais) e dados transacionais (pedidos, faturas, movimentos de estoque).
+   
+   - **Características:** Permitem armazenar grandes volumes de dados de forma estruturada e acessível para diversas operações do sistema SAP, como relatórios, transações e processos de negócios. São mantidas e gerenciadas pelo próprio sistema SAP e podem ser acessadas e modificadas por diferentes programas e usuários conforme as permissões de acesso definidas.
+
+
+Em ABAP, o comando `APPEND` é usado para adicionar uma nova entrada a uma tabela interna. Aqui está uma explicação detalhada sobre como ele funciona e como é comumente usado:
+
+1. **Funcionamento do `APPEND`:**
+   
+   - O `APPEND` é utilizado para acrescentar uma nova linha de dados a uma tabela interna existente.
+   - Ele adiciona a entrada fornecida como parâmetro ao final da tabela interna, aumentando o seu tamanho.
+   - A estrutura de dados passada como parâmetro deve ser compatível com a estrutura da tabela interna.
+   - Após a execução do `APPEND`, a nova entrada é adicionada à tabela interna e pode ser acessada e manipulada como qualquer outra entrada.
+
+2. **Sintaxe:**
+   
+   A sintaxe básica do comando `APPEND` em ABAP é a seguinte:
+   ```
+   APPEND <structure> TO <internal_table>.
+   ```
+
+   Onde:
+   - `<structure>` é a estrutura de dados que será adicionada à tabela interna.
+   - `<internal_table>` é a tabela interna à qual a nova entrada será adicionada.
+
+3. **Exemplo de Uso:**
+   
+   Considere o seguinte exemplo, onde temos uma tabela interna `lt_alunos` e queremos adicionar um novo aluno a ela:
+   ```abap
+   DATA: ls_aluno TYPE ty_aluno, " Estrutura de dados para um aluno
+         lt_alunos TYPE TABLE OF ty_aluno. " Tabela interna de alunos
+
+   ls_aluno-nome = 'João'.
+   ls_aluno-idade = 25.
+   ls_aluno-cidade = 'São Paulo'.
+
+   APPEND ls_aluno TO lt_alunos.
+   ```
+
+   Neste exemplo:
+   - Criamos uma estrutura de dados `ty_aluno` para representar um aluno.
+   - Preenchemos os dados do aluno na estrutura `ls_aluno`.
+   - Usamos o comando `APPEND` para adicionar a estrutura `ls_aluno` à tabela interna `lt_alunos`.
+
+4. **Considerações:**
+   
+   - O `APPEND` é uma operação eficiente para adicionar entradas a tabelas internas, pois não é necessário especificar um índice de posição.
+   - É importante garantir que a estrutura de dados passada como parâmetro seja compatível com a estrutura da tabela interna para evitar erros de tipo.
+   - O `APPEND` é frequentemente usado em loops para adicionar múltiplas entradas a uma tabela interna ao processar dados em ABAP.
+
+O comando `APPEND` é uma ferramenta poderosa para manipular tabelas internas em ABAP, permitindo adicionar dinamicamente novas entradas à medida que necessário durante a execução de um programa.
+
+
+
+
+Em resumo, enquanto as tabelas internas são utilizadas para armazenar dados temporários durante a execução de programas ABAP, as tabelas transparentes são usadas para armazenar dados permanentes no banco de dados SAP, disponíveis para acesso e manipulação por diferentes partes do sistema.
 **Outras informações relevantes:**
 - **Tabela LV.**
 - Diferença entre **ctrl + u vs ctrl + l vs ctrl + d**.
 - Utilização de **uppercase vs lowercase vs duplicate**.
-- **Match code da tabela Alunos**.
-- **Match code de notas**.
-- Cálculo da **Média de Wendel e Livia**.
-- Criação de **método de probabilidade**.
 - Utilização de **pool de módulos**.
 - Comando **Leave to screen 0**.
 - **Modify**, **Call method**, **export**.
-- Correção de **Calculo de média errôneo**.
-- Possível **match code de aluno e turma**.
-- Linhas específicas: **125**, **152**, **247**.
 - Padrão **MVC webdimpro**.
 - Segmento de código ABAP manipulando tabelas internas.
 - Utilização de comandos como **ctrl+f = pesquisa**, **case - when others**, **concatenate**, **includes**.
