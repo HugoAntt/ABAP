@@ -68,3 +68,4 @@ Aqui estão as informações organizadas e detalhadas:
 - Utilização de **FORM** para criar variáveis locais em ABAP.
 - Explicação sobre o comando **APPEND** e **CLEAR** em tabelas internas.
 - Utilização de **MODIFY** para modificações em tabelas.
+- Eviroment time format
