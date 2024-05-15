@@ -1,62 +1,54 @@
-Aqui estão as informações organizadas e detalhadas:
+**Projeto README - SAP ABAP Development**
 
-- **Saptechnical**
-- **Abapzombiee**
+---
 
-**Ferramentas SAP ABAP:**
-1. **SE38** - Editor de Programas ABAP:
-   - Utilizado para criar, modificar e visualizar programas ABAP.
+## Visão Geral do Projeto
 
-2. **SE80** - Navegador de Objetos ABAP:
-   - Permite a navegação por diferentes tipos de objetos ABAP, como programas, classes, funções, entre outros.
+Este projeto é uma aplicação de desenvolvimento ABAP para sistemas SAP. Visa fornecer uma gama de funcionalidades e ferramentas para facilitar o desenvolvimento, manutenção e administração de sistemas SAP usando a linguagem de programação ABAP.
 
-3. **SE11** - Dicionário de Dados ABAP:
+## Ferramentas e Recursos Principais
+
+### Ferramentas de Desenvolvimento
+
+1. **SE38 - Editor de Programas ABAP**:
+   - Utilizado para criação, modificação e visualização de programas ABAP.
+   
+2. **SE80 - Navegador de Objetos ABAP**:
+   - Permite navegação por diferentes tipos de objetos ABAP, como programas, classes, funções, entre outros.
+   
+3. **SE11 - Dicionário de Dados ABAP**:
    - Utilizado para criar e manter objetos de dicionário de dados, como tabelas, visões, tipos de dados, entre outros.
 
-4. **SE37** - Editor de Funções:
+4. **SE37 - Editor de Funções**:
    - Usado para criar, modificar e visualizar funções de função (sub-rotinas) em ABAP.
-
-5. **SE24** - Editor de Classes:
+   
+5. **SE24 - Editor de Classes**:
    - Permite criar, modificar e visualizar classes ABAP (usadas em programação orientada a objetos).
 
-6. **SE93** - Manutenção de Transações:
-   - Usado para criar, modificar e visualizar transações SAP.
+### Outras Funcionalidades
 
-7. **EWK1**:
-   - Informação não fornecida.
+- **Elementos de Entrada**:
+   - Fornece informações detalhadas sobre elementos de entrada como checkbox e radio button, explicando sua utilização e diferenças.
 
-8. **SEGW** - Configurações no Odata:
-   - Ferramenta para configurar serviços OData para o desenvolvimento de aplicativos SAP.
+- **Outras Informações Relevantes**:
+   - Inclui detalhes sobre tabelas, comandos de manipulação de tabelas internas, MVC padrão webdimpro, correções de erros, proteção de pacotes, entre outros.
 
-9. **SE91** - Classe de Mensagem:
-   - Utilizado para definir e manter mensagens em SAP, que podem ser exibidas durante a execução de programas ou transações.
+## Como Utilizar
 
-10. **SE14** - AJUSTAR TABELA:
-    - Utilizado para realizar ajustes em tabelas de banco de dados no sistema SAP.
+Para utilizar este projeto, é necessário ter acesso a um sistema SAP e às transações mencionadas acima. Siga as instruções abaixo para começar:
 
-**Elementos de Entrada:**
-- **Checkbox**:
-  - É um elemento de entrada que permite ao usuário selecionar várias opções ao mesmo tempo.
-  - Cada checkbox representa uma opção independente e pode ser marcado ou desmarcado individualmente.
-  - É útil quando o usuário precisa selecionar várias opções de uma lista ou conjunto de opções.
+1. Abra o sistema SAP e acesse as transações mencionadas (SE38, SE80, SE11, etc.).
+2. Utilize as ferramentas para desenvolver, modificar e administrar objetos ABAP conforme necessário.
+3. Consulte as informações detalhadas sobre elementos de entrada e outras funcionalidades para melhorar seu entendimento e uso do sistema.
 
-- **Radio Button**:
-  - É um elemento de entrada que permite ao usuário selecionar apenas uma opção de um conjunto pré-definido.
-  - Os radio buttons são mutuamente exclusivos, o que significa que selecionar uma opção automaticamente desmarca as outras opções do mesmo grupo.
-  - É ideal para apresentar ao usuário uma lista de opções onde apenas uma escolha é permitida, como gênero (masculino/feminino), status civil (solteiro/casado/divorciado), entre outros.
+## Contribuição
 
-**Outras informações relevantes:**
-- **Tabela LV.**
-- Diferença entre **ctrl + u vs ctrl + l vs ctrl + d** - Utilização de **uppercase vs lowercase vs duplicate**.
-- Utilização de **pool de módulos**.
-- Comando **Leave to screen 0**.
-- **Modify**, **Call method**, **export**.
-- Correção de **Calculo de média errôneo**.
-- Possível **match code de aluno e turma**.
-- Padrão **MVC webdimpro**.
-- Segmento de código ABAP manipulando tabelas internas.
-- Utilização de comandos como **ctrl+f = pesquisa**, **case - when others**, **concatenate**, **includes**.
-- Informações sobre proteção de pacotes e desbloqueio.
-- Utilização de **FORM** para criar variáveis locais em ABAP.
-- Explicação sobre o comando **APPEND** e **CLEAR** em tabelas internas.
-- Utilização de **MODIFY** para modificações em tabelas.
+Contribuições para este projeto são bem-vindas! Se você tem sugestões de novas funcionalidades, melhorias ou correções, sinta-se à vontade para enviar um pull request.
+
+## Autores
+
+- Hugo Antunes
+
+---
+
+Este README fornece uma visão geral dos estudos, detalhando suas características principais, como utilizar e contribuir.
