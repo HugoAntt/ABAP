@@ -1,0 +1,51 @@
+*&---------------------------------------------------------------------*
+*& Report ZHUG_CURSO6
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zhug_curso6.
+*** Ini - HUGOANSILVA - TEXTO - 15.05.2024 17:27:42 ***
+
+
+"Forma de armazenar variaveis em uma estrutura.
+
+START-OF-SELECTION.
+  DATA: BEGIN OF zcurso_cliente_s
+       ,Id TYPE c
+       ,nome(20) TYPE c
+       ,END OF zcurso_cliente_s.
+
+START-OF-SELECTION.
+  DATA lt_cliente TYPE STANDARD TABLE OF zcurso_cliente_s.
+  DATA ls_cliente TYPE minha_estrutura.
+
+  ls_cliente-id = 10.
+  ls_cliente-nome = 'José'.
+  APPEND ls_cliente TO lt_cliente.
+
+  ls_cliente-id = 20.
+  ls_cliente-nome = 'Mauro'.
+  APPEND ls_cliente TO lt_cliente.
+
+  ls_cliente-id = 30.
+  ls_cliente-nome = 'Paula'.
+  APPEND ls_cliente TO lt_cliente.
+
+  ls_cliente-id = 30.
+  ls_cliente-nome = 'Paula'.
+  APPEND ls_cliente TO lt_cliente.
+
+  "Ordenando a tabela pelo id.
+  SORT lt_cliente BY id ASCENDING.
+
+  "Deletando id duplicados.
+  DELETE ADJACENT DUPLICATES FROM lt_cliente COMPARING id.
+
+  "Preenchendo Tabela
+  LOOP AT lt_cliente INTO ls_cliente.
+    WRITE ls_cliente-id.
+    WRITE ls_cliente-nome.
+    NEW-LINE.
+  ENDLOOP.
+
+*** Fim - HUGOANSILVA ***
