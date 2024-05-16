@@ -10,21 +10,6 @@ Este projeto é uma aplicação de desenvolvimento ABAP para sistemas SAP. Visa 
 
 ### Ferramentas de Desenvolvimento
 
-1. **SE38 - Editor de Programas ABAP**:
-   - Utilizado para criação, modificação e visualização de programas ABAP.
-   
-2. **SE80 - Navegador de Objetos ABAP**:
-   - Permite navegação por diferentes tipos de objetos ABAP, como programas, classes, funções, entre outros.
-   
-3. **SE11 - Dicionário de Dados ABAP**:
-   - Utilizado para criar e manter objetos de dicionário de dados, como tabelas, visões, tipos de dados, entre outros.
-
-4. **SE37 - Editor de Funções**:
-   - Usado para criar, modificar e visualizar funções de função (sub-rotinas) em ABAP.
-   
-5. **SE24 - Editor de Classes**:
-   - Permite criar, modificar e visualizar classes ABAP (usadas em programação orientada a objetos).
-
 ### Outras Funcionalidades
 
 - **Elementos de Entrada**:
