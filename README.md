@@ -2,16 +2,12 @@
 
 ---
 
-## Visão Geral do Projeto
+## Visão Geral
 
-Este projeto é uma aplicação de desenvolvimento ABAP para sistemas SAP. Visa fornecer uma gama de funcionalidades e ferramentas para facilitar o desenvolvimento, manutenção e administração de sistemas SAP usando a linguagem de programação ABAP.
+Aplicação de desenvolvimento ABAP para sistemas SAP. Visa fornecer uma gama de funcionalidades e ferramentas para facilitar o desenvolvimento, manutenção e administração de sistemas SAP usando a linguagem de programação ABAP.
 
 ## Ferramentas e Recursos Principais
-
-### Ferramentas de Desenvolvimento
-
-### Outras Funcionalidades
-
+...
 - **Elementos de Entrada**:
    - Fornece informações detalhadas sobre elementos de entrada como checkbox e radio button, explicando sua utilização e diferenças.
 
