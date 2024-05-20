@@ -100,18 +100,36 @@ ENDTRY.
 
 "Tabela ALV
 " Código da Layout da ALV
+
+"código original
+*lo_layout_settings   = lo_alv->get_layout( ).
+*lo_layout_key-report = sy-repid.
+*lo_layout_settings->set_key( lo_layout_key ).
+*lo_layout_settings->set_save_restriction( if_salv_c_layout=>restrict_none ).
+*
+*lo_functions = lo_alv->get_functions( ).
+*lo_functions->set_all( ).
+*
+*"lo_column = lo_columns->get_column( 'DATA1' ).
+*
+*lo_columns = lo_alv->get_columns( ).
+*lo_columns->set_optimize( ).
+*"Fim código original
+
+" Código da Layout da ALV
 lo_layout_settings   = lo_alv->get_layout( ).
 lo_layout_key-report = sy-repid.
 lo_layout_settings->set_key( lo_layout_key ).
 lo_layout_settings->set_save_restriction( if_salv_c_layout=>restrict_none ).
-
 lo_functions = lo_alv->get_functions( ).
 lo_functions->set_all( ).
-
 "lo_column = lo_columns->get_column( 'DATA1' ).
-
 lo_columns = lo_alv->get_columns( ).
 lo_columns->set_optimize( ).
+lo_display_settings = lo_alv->get_display_settings( ).
+lo_display_settings->set_striped_pattern( if_salv_c_bool_sap=>true ).
+lo_display_settings->set_list_header( TEXT-001 ).
+lo_alv->display( ).
 
 TRY .
 
@@ -167,17 +185,17 @@ ENDTRY.
 
 
 
-lo_display_settings = lo_alv->get_display_settings( ).
-lo_display_settings->set_striped_pattern( if_salv_c_bool_sap=>true ).
+*lo_display_settings = lo_alv->get_display_settings( ).
+*lo_display_settings->set_striped_pattern( if_salv_c_bool_sap=>true ).
+*
+*lo_display_settings->set_list_header( TEXT-001 ).
+*
+*lo_alv->display( ).
 
-lo_display_settings->set_list_header( TEXT-001 ).
 
-lo_alv->display( ).
-
-
-cont = 1.
-IF cont = 2.
-* 'Mensagem teste'
-ENDIF.
+*cont = 1.
+*IF cont = 2.
+** 'Mensagem teste'
+*ENDIF.
 
 *** Fim - HUGOANSILVA, ARTHUR  ***
