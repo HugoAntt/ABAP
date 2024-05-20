@@ -85,6 +85,19 @@ LOOP AT lt_zprob INTO DATA(ls_zprob).
 
 ENDLOOP.
 
+
+
+TRY.
+    cl_salv_table=>factory(
+      IMPORTING
+        r_salv_table = lo_alv
+      CHANGING
+        t_table      =  lt_prob ).
+
+  CATCH cx_salv_msg INTO lex_message.
+
+ENDTRY.
+
 "Tabela ALV
 " Código da Layout da ALV
 lo_layout_settings   = lo_alv->get_layout( ).
@@ -100,24 +113,61 @@ lo_functions->set_all( ).
 lo_columns = lo_alv->get_columns( ).
 lo_columns->set_optimize( ).
 
+TRY .
+
+    lo_column = lo_columns->get_column( 'Discplina' ).
+    lo_column->set_short_text( 'DISC' ).
+    lo_column->set_medium_text( 'DISCPLINA' ).
+    lo_column->set_long_text( 'DISCIPLINA' ).
+
+    lo_column = lo_columns->get_column( 'ID_NOTA' ).
+    lo_column->set_short_text( 'Id Nota' ).
+    lo_column->set_medium_text( 'Id da Nota' ).
+    lo_column->set_long_text(' Id da Nota ').
+
+    lo_column = lo_columns->get_column( 'NOME_ALUNOS' ).
+    lo_column->set_short_text( 'Aluno' ).
+    lo_column->set_medium_text( 'Nome do Aluno' ).
+    lo_column->set_long_text( 'Nome do Aluno' ).
+
+    lo_column = lo_columns->get_column( 'NOTA' ).
+    lo_column->set_short_text( '1° Nota' ).
+    lo_column->set_medium_text( '1° Nota do Aluno' ).
+    lo_column->set_long_text( '1° Nota do Aluno' ).
+
+    lo_column = lo_columns->get_column( 'NOTA' ).
+    lo_column->set_short_text( '2° Nota' ).
+    lo_column->set_medium_text( '2° Nota do Aluno' ).
+    lo_column->set_long_text( '2° Nota do Aluno' ).
+
+    lo_column = lo_columns->get_column( 'NOTA' ).
+    lo_column->set_short_text( '3° Nota' ).
+    lo_column->set_medium_text( '3° Nota do Aluno' ).
+    lo_column->set_long_text( '3° Nota do Aluno' ).
+
+    lo_column = lo_columns->get_column( 'NOTA' ).
+    lo_column->set_short_text( '4° Nota' ).
+    lo_column->set_medium_text( '4° Nota do Aluno' ).
+    lo_column->set_long_text( '4° Nota do Aluno' ).
+
+    lo_column = lo_columns->get_column( 'MEDIA_PONDERADA' ).
+    lo_column->set_short_text( 'Média' ).
+    lo_column->set_medium_text( 'Média Ponderada' ).
+    lo_column->set_long_text( 'Média Ponderada' ).
+
+
+  CATCH cx_salv_not_found INTO lex_not_found.
+
+ENDTRY.
+
+
+
 lo_display_settings = lo_alv->get_display_settings( ).
 lo_display_settings->set_striped_pattern( if_salv_c_bool_sap=>true ).
 
 lo_display_settings->set_list_header( TEXT-001 ).
 
 lo_alv->display( ).
-
-
-TRY.
-    cl_salv_table=>factory(
-      IMPORTING
-        r_salv_table = lo_alv
-      CHANGING
-        t_table      =  lt_prob ).
-
-  CATCH cx_salv_msg INTO lex_message.
-
-ENDTRY.
 
 
 cont = 1.
