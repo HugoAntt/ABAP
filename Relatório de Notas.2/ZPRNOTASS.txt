@@ -115,10 +115,10 @@ lo_columns->set_optimize( ).
 
 TRY .
 
-    lo_column = lo_columns->get_column( 'Discplina' ).
-    lo_column->set_short_text( 'DISC' ).
-    lo_column->set_medium_text( 'DISCPLINA' ).
-    lo_column->set_long_text( 'DISCIPLINA' ).
+    lo_column = lo_columns->get_column( 'DISCIPLINA' ).
+    lo_column->set_short_text( 'Disc' ).
+    lo_column->set_medium_text( 'Disciplina' ).
+    lo_column->set_long_text( 'Disciplina' ).
 
     lo_column = lo_columns->get_column( 'ID_NOTA' ).
     lo_column->set_short_text( 'Id Nota' ).
@@ -130,22 +130,27 @@ TRY .
     lo_column->set_medium_text( 'Nome do Aluno' ).
     lo_column->set_long_text( 'Nome do Aluno' ).
 
-    lo_column = lo_columns->get_column( 'NOTA' ).
+    lo_column = lo_columns->get_column( 'DATA' ).
+    lo_column->set_short_text( 'Data' ).
+    lo_column->set_medium_text( 'Data da presença' ).
+    lo_column->set_long_text( 'Data do registro da presença' ).
+
+    lo_column = lo_columns->get_column( 'NOTA1' ).
     lo_column->set_short_text( '1° Nota' ).
     lo_column->set_medium_text( '1° Nota do Aluno' ).
     lo_column->set_long_text( '1° Nota do Aluno' ).
 
-    lo_column = lo_columns->get_column( 'NOTA' ).
+    lo_column = lo_columns->get_column( 'NOTA2' ).
     lo_column->set_short_text( '2° Nota' ).
     lo_column->set_medium_text( '2° Nota do Aluno' ).
     lo_column->set_long_text( '2° Nota do Aluno' ).
 
-    lo_column = lo_columns->get_column( 'NOTA' ).
+    lo_column = lo_columns->get_column( 'NOTA3' ).
     lo_column->set_short_text( '3° Nota' ).
     lo_column->set_medium_text( '3° Nota do Aluno' ).
     lo_column->set_long_text( '3° Nota do Aluno' ).
 
-    lo_column = lo_columns->get_column( 'NOTA' ).
+    lo_column = lo_columns->get_column( 'NOTA4' ).
     lo_column->set_short_text( '4° Nota' ).
     lo_column->set_medium_text( '4° Nota do Aluno' ).
     lo_column->set_long_text( '4° Nota do Aluno' ).
