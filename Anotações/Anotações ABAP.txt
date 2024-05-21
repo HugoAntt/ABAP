@@ -18,8 +18,33 @@ Aqui estão as informações organizadas e detalhadas:
 4. **SE37** - Editor de Funções:
    - Usado para criar, modificar e visualizar funções de função (sub-rotinas) em ABAP.
 
+-----------------------------------------------------------------------------------------
+
 5. **SE24** - Editor de Classes:
    - Permite criar, modificar e visualizar classes ABAP (usadas em programação orientada a objetos).
+A transação SE24 é conhecida como "Class Builder" no ambiente SAP. Ela é uma ferramenta utilizada pelos desenvolvedores ABAP para criar e manter classes ABAP.
+
+Aqui estão algumas das principais funcionalidades e usos da transação SE24:
+
+Criação de classes ABAP: A SE24 permite aos desenvolvedores criar novas classes ABAP diretamente no sistema SAP. As classes são a base da programação 
+orientada a objetos (POO) em ABAP e são amplamente utilizadas para encapsular lógica de negócios e dados.
+
+Edição e manutenção de classes: Os desenvolvedores podem usar a SE24 para visualizar, modificar e manter classes ABAP existentes no sistema SAP. 
+Isso inclui a adição de métodos, atributos e outras seções de código à classe.
+
+Herança de classes: A SE24 suporta o conceito de herança de classes, permitindo aos desenvolvedores criar hierarquias de classes onde as classes filhas 
+herdam comportamentos e atributos das classes pai.
+
+Interface de testes: A ferramenta inclui recursos para testar e depurar classes diretamente no ambiente de desenvolvimento ABAP. 
+Isso é útil para garantir o correto funcionamento das classes antes de serem implantadas em ambientes de produção.
+
+Análise de dependências: Assim como na SE80, os desenvolvedores podem usar a SE24 para analisar as dependências entre classes ABAP e outros objetos de 
+desenvolvimento no sistema SAP.
+
+Em resumo, a transação SE24 é uma ferramenta fundamental para os desenvolvedores ABAP que trabalham com programação orientada a objetos no ambiente SAP, 
+oferecendo uma interface para criar, editar e manter classes ABAP de forma eficiente e organizada.
+
+----------------------------------------------------------------------------------------------------
 
 6. **SE93** - Manutenção de Transações:
    - Usado para criar, modificar e visualizar transações SAP.

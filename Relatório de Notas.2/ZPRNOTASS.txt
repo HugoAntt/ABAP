@@ -7,15 +7,16 @@ REPORT zprnotass.
 *** Ini - HUGOANSILVA, ARTHUR - TEXTO - 09.05.2024 15:49:17 ***
 
 TYPES: BEGIN OF ty_prob,
-         id_nota         TYPE zid_nota,
+
          nome_alunos     TYPE Znomealuno,
          disciplina      TYPE z_nome_disciplina,
-         data            TYPE zdata,
          nota1           TYPE znota,
          nota2           TYPE znota,
          nota3           TYPE znota,
          nota4           TYPE znota,
          media_ponderada TYPE znota,
+         probabilidade   TYPE znota,
+
        END OF ty_prob.
 
 "Declaração ALV
@@ -121,20 +122,10 @@ TRY .
     lo_column->set_medium_text( 'Disciplina' ).
     lo_column->set_long_text( 'Disciplina' ).
 
-    lo_column = lo_columns->get_column( 'ID_NOTA' ).
-    lo_column->set_short_text( 'Id Nota' ).
-    lo_column->set_medium_text( 'Id da Nota' ).
-    lo_column->set_long_text(' Id da Nota ').
-
     lo_column = lo_columns->get_column( 'NOME_ALUNOS' ).
     lo_column->set_short_text( 'Aluno' ).
     lo_column->set_medium_text( 'Nome do Aluno' ).
     lo_column->set_long_text( 'Nome do Aluno' ).
-
-    lo_column = lo_columns->get_column( 'DATA' ).
-    lo_column->set_short_text( 'Data' ).
-    lo_column->set_medium_text( 'Data da presença' ).
-    lo_column->set_long_text( 'Data do registro da presença' ).
 
     lo_column = lo_columns->get_column( 'NOTA1' ).
     lo_column->set_short_text( '1° Nota' ).
@@ -160,6 +151,11 @@ TRY .
     lo_column->set_short_text( 'Média' ).
     lo_column->set_medium_text( 'Média Ponderada' ).
     lo_column->set_long_text( 'Média Ponderada' ).
+
+    lo_column = lo_columns->get_column( 'PROBABILIDADE' ).
+    lo_column->set_short_text( 'Prob' ).
+    lo_column->set_medium_text( 'Probabilidade' ).
+    lo_column->set_long_text( 'Probabilidade de Aprovação' ).
 
 
   CATCH cx_salv_not_found INTO lex_not_found.
