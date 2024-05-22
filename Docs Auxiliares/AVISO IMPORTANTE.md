@@ -10,4 +10,3 @@ Agradeço a compreensão e colaboração de todos para mantermos um ambiente de 
 
 Atenciosamente,
 Hugo Antunes.
-
