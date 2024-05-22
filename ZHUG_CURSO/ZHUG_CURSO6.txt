@@ -7,18 +7,26 @@ REPORT zhug_curso6.
 *** Ini - HUGOANSILVA - TEXTO - 15.05.2024 17:27:42 ***
 
 
-"Forma de armazenar variaveis em uma estrutura.
 START-OF-SELECTION.
-  " Declaração da tabela interna para receber dados
-  DATA: BEGIN OF zcurso_cliente_s,
-          Id   TYPE c,
-          nome TYPE c LENGTH 20,
-        END OF zcurso_cliente_s.
+  DATA: Id   TYPE c,
+        nome TYPE c LENGTH 20.
 
-  DATA: lt_cliente TYPE TABLE OF zcurso_cliente_s,
-        ls_cliente TYPE zcurso_cliente_s.
+*A forma do exemplo original ababixo, a ideia seria utilizar as manipulações em uma tabela Standart
+*START-OF-SELECTION.
+*  DATA: BEGIN OF zcurso_cliente_s
+*       ,Id TYPE c
+*       ,nome(20) TYPE c
+*       ,END OF zcurso_cliente_s.
 
-  " Populando a tabela interna com dados
+  TYPES: BEGIN OF ty_cliente,
+           Id   TYPE i,
+           nome TYPE c,
+         END OF ty_cliente.
+
+  DATA: lt_cliente TYPE TABLE OF ty_cliente,
+        ls_cliente TYPE ty_cliente.
+
+  " Populando a tabela interna
   ls_cliente-Id = '10'.
   ls_cliente-nome = 'José'.
   APPEND ls_cliente TO lt_cliente.

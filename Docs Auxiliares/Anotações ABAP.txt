@@ -61,6 +61,8 @@ oferecendo uma interface para criar, editar e manter classes ABAP de forma efici
 10. **SE14** - AJUSTAR TABELA:
     - Utilizado para realizar ajustes em tabelas de banco de dados no sistema SAP.
 
+11 **SE16** E -
+
 **Elementos de Entrada:**
 - **Checkbox**:
   - É um elemento de entrada que permite ao usuário selecionar várias opções ao mesmo tempo.
