@@ -61,7 +61,21 @@ oferecendo uma interface para criar, editar e manter classes ABAP de forma efici
 10. **SE14** - AJUSTAR TABELA:
     - Utilizado para realizar ajustes em tabelas de banco de dados no sistema SAP.
 
-11 **SE16** E -
+Claro, aqui estão algumas boas observações sobre as transações SE16 e SE11:
+
+1. **SE16 - Visualização de Dados de Tabela**:
+   - A transação SE16 é uma ferramenta poderosa para visualizar dados de tabela no SAP.
+   - Permite aos usuários acessar e visualizar dados de tabela de forma rápida e eficiente.
+   - É útil para verificar os dados existentes em uma tabela antes de fazer alterações ou execuções de programas.
+   - Oferece opções de filtragem e seleção para encontrar dados específicos com facilidade.
+   - Possui funcionalidades de exportação de dados para outros formatos, como Excel, facilitando análises adicionais fora do ambiente SAP.
+
+2. **SE11 - Definição de Dados**:
+   - A transação SE11 é essencial para gerenciar definições de dados no SAP.
+   - Permite a visualização e manutenção de objetos de dados, como tabelas, tipos de dados e estruturas.
+   - É utilizada para criar, modificar e visualizar estruturas de tabela, campos e outros elementos de dados.
+   - Possui recursos avançados para análise de campos de tabela, como atributos de campo, chaves, índices, entre outros.
+   - Facilita a integração de novos desenvolvimentos com o ambiente SAP, garantindo consistência e conformidade com os padrões de dados.
 
 **Elementos de Entrada:**
 - **Checkbox**:
