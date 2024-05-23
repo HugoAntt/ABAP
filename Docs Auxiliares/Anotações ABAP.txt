@@ -161,7 +161,15 @@ Em ABAP, o comando `APPEND` é usado para adicionar uma nova entrada a uma tabel
 
 O comando `APPEND` é uma ferramenta poderosa para manipular tabelas internas em ABAP, permitindo adicionar dinamicamente novas entradas à medida que necessário durante a execução de um programa.
 
+Sobre a Tabela: A tabela TADIR é uma tabela fundamental no sistema SAP. Ela armazena informações sobre todos os objetos de desenvolvimento no sistema SAP. Esses objetos podem incluir programas ABAP, telas de diálogo, relatórios, funções, entre outros elementos de desenvolvimento.
 
+A tabela TADIR contém dados importantes, como o tipo de objeto, o nome do objeto, o pacote em que o objeto está armazenado, a data e hora da criação e da última modificação, o autor da modificação e várias outras informações relacionadas ao objeto de desenvolvimento.
+
+Essa tabela desempenha um papel crucial no gerenciamento e rastreamento de objetos de desenvolvimento no sistema SAP. Por meio dela, os desenvolvedores podem encontrar informações detalhadas sobre os objetos de interesse, acompanhar as modificações feitas nos objetos ao longo do tempo e gerenciar o ciclo de vida do desenvolvimento de software no ambiente SAP.
+
+Além disso, a tabela TADIR é frequentemente utilizada em diversas atividades de administração de sistemas SAP, como transporte de objetos entre sistemas, análise de impacto de alterações, auditoria de desenvolvimento e muito mais.
+
+No geral, a tabela TADIR é uma parte essencial da estrutura de dados do sistema SAP e desempenha um papel significativo no desenvolvimento, gerenciamento e manutenção de sistemas SAP em organizações de todo o mundo.
 
 
 Em resumo, enquanto as tabelas internas são utilizadas para armazenar dados temporários durante a execução de programas ABAP, as tabelas transparentes são usadas para armazenar dados permanentes no banco de dados SAP, disponíveis para acesso e manipulação por diferentes partes do sistema.
