@@ -5,19 +5,26 @@
 *&---------------------------------------------------------------------*
 REPORT zhug_curso7.
 *** Ini - HUGOANSILVA - TEXTO - 23.05.2024 15:31:50 ***
-DATA ld_text TYPE char10.
+DATA ld_fs TYPE char10.
 
-ld_text = 'Teste'.
+ld_fs = 'Teste'.
 
 BREAK-POINT.
 
-FIELD-SYMBOLS <ld_text> TYPE char10.
+"Criação de Field Symbol
+FIELD-SYMBOLS <ld_fs> TYPE char10.
 
-"Verificaidno se o Field Symbol tem refência. 
-IF <ld_text> IS ASSIGNED.
+ASSIGN ld_fs to <ld_fs>.
+
+"Verificaidno se o Field Symbol tem refência.
+IF <ld_fs> IS ASSIGNED.
   WRITE 'Tem referência.'.
 ELSE.
   WRITE 'Não tem referência.'.
 ENDIF.
+
+"Limpando referência do Field Symbol
+UNASSIGN <ld_fs>.
+
 
 *** Fim - HUGOANSILVA ***
