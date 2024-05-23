@@ -1,0 +1,23 @@
+*&---------------------------------------------------------------------*
+*& Report ZHUG_CURSO7
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zhug_curso7.
+*** Ini - HUGOANSILVA - TEXTO - 23.05.2024 15:31:50 ***
+DATA ld_text TYPE char10.
+
+ld_text = 'Teste'.
+
+BREAK-POINT.
+
+FIELD-SYMBOLS <ld_text> TYPE char10.
+
+"Verificaidno se o Field Symbol tem refência. 
+IF <ld_text> IS ASSIGNED.
+  WRITE 'Tem referência.'.
+ELSE.
+  WRITE 'Não tem referência.'.
+ENDIF.
+
+*** Fim - HUGOANSILVA ***
