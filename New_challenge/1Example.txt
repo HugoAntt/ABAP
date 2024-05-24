@@ -1,0 +1,24 @@
+Data: ti_result type string,
+      cont type i,
+      lv_saida type string,
+      ti_coment type string.
+ 
+Read report ztest (ti_source)
+ 
+loop at ti_source into lv text.
+ 
+if lv_text cs 'select'
+	data(lv_saida) = line_index (ti_result = lv_text)
+	ti result[lv_saida] = lv_text.
+	ti_coment[lv_saida] = |'*' {lv_text}|.
+
+	If lv_text cs 'For all entries'.
+	cont = 1.
+ 
+       	elseif lv_text cs '.' and cont = 1.
+	* edit da tabela ti_source *
+	else if lv_texy cs '.'.
+	clear ti_result.
+	clear ti_coment.
+	endif.
+endif.
