@@ -7,18 +7,27 @@ Read report ztest (ti_source)
  
 loop at ti_source into lv text.
  
-if lv_text cs 'select'
-	data(lv_saida) = line_index (ti_result = lv_text)
-	ti result[lv_saida] = lv_text.
-	ti_coment[lv_saida] = |'*' {lv_text}|.
+If line_exists (ti_result).
+cont = 0.
+ 
+if lv_text cs 'if'.
+cont = 2.
+endif.
+ 
+if lv_text cs 'select' and cont <> 2.
+	lv_saida = line_index (ti_result = lv_text)	
+ti result[lv_saida] = lv_text.
+	lv_saida = line_index (ti_coment = lv_text)
+ti_coment[lv_saida] = |'*' {lv_text}|.
 
 	If lv_text cs 'For all entries'.
 	cont = 1.
  
-       	elseif lv_text cs '.' and cont = 1.
+       	Elseif lv_text cs '.' and cont = 1.
 	* edit da tabela ti_source *
-	else if lv_texy cs '.'.
-	clear ti_result.
-	clear ti_coment.
+	Else if lv_texy cs '.'.
+clear ti_result.
+ 
+clear ti_coment.
 	endif.
 endif.
