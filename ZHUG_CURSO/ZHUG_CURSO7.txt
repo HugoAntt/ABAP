@@ -5,26 +5,41 @@
 *&---------------------------------------------------------------------*
 REPORT zhug_curso7.
 *** Ini - HUGOANSILVA - TEXTO - 23.05.2024 15:31:50 ***
-DATA ld_fs TYPE char10.
+DATA ld_teste TYPE char10.
+DATA ld_teste2 TYPE char10.
 
-ld_fs = 'Teste'.
+ld_teste = 'Teste'.
 
 BREAK-POINT.
 
 "Criação de Field Symbol
-FIELD-SYMBOLS <ld_fs> TYPE char10.
+FIELD-SYMBOLS: <ld_teste>  TYPE char10,
+               <ld_teste2> TYPE char10.
 
-ASSIGN ld_fs to <ld_fs>.
+
+ASSIGN ld_teste TO <ld_teste>.
 
 "Verificaidno se o Field Symbol tem refência.
-IF <ld_fs> IS ASSIGNED.
+IF <ld_teste> IS ASSIGNED.
   WRITE 'Tem referência.'.
+  NEW-LINE.
+  WRITE <ld_teste>.
 ELSE.
   WRITE 'Não tem referência.'.
 ENDIF.
 
 "Limpando referência do Field Symbol
-UNASSIGN <ld_fs>.
+UNASSIGN <ld_teste>.
 
+ld_teste = 'Teste do novo referencial'.
+ld_teste2 = 'Teste2 do novo referencial.'.
+
+
+"Referenciando novamente
+ASSIGN ld_teste TO <ld_teste>.
+ASSIGN ld_teste2 TO <ld_teste2>.
+
+
+WRITE: ld_teste, ld_teste2.
 
 *** Fim - HUGOANSILVA ***
