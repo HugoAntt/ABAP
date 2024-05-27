@@ -5,14 +5,18 @@
 *&---------------------------------------------------------------------*
 REPORT zhug_curso7.
 *** Ini - HUGOANSILVA - TEXTO - 23.05.2024 15:31:50 ***
-DATA ld_teste TYPE char30.
-DATA ls_scarr TYPE scarr.
+
+"Há declaração de estruturas e tabela interna, caso haja dúvidas.
+DATA: ld_teste TYPE char30,
+      ls_scarr TYPE scarr,
+      lt_scarr TYPE STANDARD TABLE OF scarr.
 
 "Criação de Field Symbol
 FIELD-SYMBOLS: <ld_teste> TYPE char30,
-               <ls_scarr> TYPE scarr.
+               <ls_scarr> TYPE scarr,
+               <lt_scarr> TYPE scarr.
 
-"Preenchendo os campos
+"Preenchendo as Variáveis e Estruturas.
 ld_teste = 'Teste'.
 ls_scarr-carrid = 1.
 ls_scarr-carrname = 'AZUL'.
@@ -20,45 +24,45 @@ ls_scarr-currcode = 'EUR'.
 
 BREAK-POINT.
 
+"Referenciando os FS.
 ASSIGN: ld_teste TO <ld_teste>,
         ls_scarr TO <ls_scarr>.
 
-"Verificaidno se o Field Symbol "<ld_teste>" tem referência.
-IF <ld_teste> IS ASSIGNED.
-  WRITE 'Tem referência:'.
-  WRITE <ld_teste> LEFT-JUSTIFIED.
-ELSE.
-  WRITE 'Não tem referência.'.
-ENDIF.
+"Forma de Verificar se o Field Symbol "<ld_teste>" tem referência.
+*IF <ld_teste> IS ASSIGNED.
+*  WRITE 'Tem referência:'.
+*  WRITE <ld_teste> LEFT-JUSTIFIED.
+*ELSE.
+*  WRITE 'Não tem referência.'.
+*ENDIF.
 
 NEW-LINE.
 
-"Verificaidno se o Field Symbol "<ls_teste>" tem referência.
-IF <ls_scarr> IS ASSIGNED.
-  WRITE 'Tem referência: '.
-  WRITE <ls_scarr> LEFT-JUSTIFIED.
-ELSE.
-  WRITE 'Não tem referência.'.
-ENDIF.
-
-"Limpando referência do Field Symbol
+"Limpando referência do Field Symbol.
 UNASSIGN <ld_teste>.
-UNASSIGN <ls_scarr>.
 
 NEW-PAGE.
 
 "Preenchendo Novamente.
 ld_teste = 'Teste do novo referencial'.
-ls_scarr-carrid = 2.
-ls_scarr-carrname = 'AZUL'.
-ls_scarr-currcode = 'AUD'.
 
-"Referenciando novamente
-ASSIGN: ld_teste TO <ld_teste>,
-        ls_scarr TO <ls_scarr>.
+"Referenciando novamente.
+ASSIGN ld_teste TO <ld_teste>.
 
+"Resultado:
 WRITE: ld_teste LEFT-JUSTIFIED.
 NEW-LINE.
 WRITE ls_scarr LEFT-JUSTIFIED.
+
+NEW-PAGE.
+
+SELECT *
+  FROM scarr
+  INTO TABLE lt_scarr.
+
+"Adicionando os campos da tabela interna ao Field Symbol.
+LOOP AT lt_scarr ASSIGNING <lt_scarr>.
+  WRITE <lt_scarr>-carrname.
+ENDLOOP.
 
 *** Fim - HUGOANSILVA ***
