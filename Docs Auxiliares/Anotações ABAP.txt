@@ -171,6 +171,14 @@ Além disso, a tabela TADIR é frequentemente utilizada em diversas atividades d
 
 No geral, a tabela TADIR é uma parte essencial da estrutura de dados do sistema SAP e desempenha um papel significativo no desenvolvimento, gerenciamento e manutenção de sistemas SAP em organizações de todo o mundo.
 
+------------------------------------------------------------------------------------------------------------
+o **Fyeld Symbol** é um conceito fundamental para manipulação de campos em listas de seleção interativas ou 
+para interação com eventos de tela em programas SAP. Fyeld Symbols permitem que você se refira dinamicamente a 
+campos de dados, permitindo uma manipulação flexível e genérica desses campos durante a execução do programa. 
+Isso é especialmente útil quando você precisa lidar com estruturas de dados complexas ou quando precisa escrever 
+código que possa ser reutilizado em diferentes contextos, pois permite acessar campos de forma dinâmica, sem a 
+necessidade de referências estáticas diretas.
+------------------------------------------------------------------------------------------------------------
 
 Em resumo, enquanto as tabelas internas são utilizadas para armazenar dados temporários durante a execução de programas ABAP, as tabelas transparentes são usadas para armazenar dados permanentes no banco de dados SAP, disponíveis para acesso e manipulação por diferentes partes do sistema.
 **Outras informações relevantes:**
