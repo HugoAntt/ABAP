@@ -1,33 +1,30 @@
-Data: ti_result type string,
-      cont type i,
-      lv_saida type string,
-      ti_coment type string.
- 
-Read report ztest (ti_source)
- 
-loop at ti_source into lv text.
- 
-If line_exists (ti_result).
-cont = 0.
- 
-if lv_text cs 'if'.
-cont = 2.
-endif.
- 
-if lv_text cs 'select' and cont <> 2.
-	lv_saida = line_index (ti_result = lv_text)	
-ti result[lv_saida] = lv_text.
-	lv_saida = line_index (ti_coment = lv_text)
-ti_coment[lv_saida] = |'*' {lv_text}|.
+*&---------------------------------------------------------------------*
+*& Report ZHUG_CURSO7
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zhug_curso7.
+*** Ini - HUGOANSILVA - TEXTO - 23.05.2024 15:31:50 ***
+DATA ld_fs TYPE char10.
 
-	If lv_text cs 'For all entries'.
-	cont = 1.
- 
-       	Elseif lv_text cs '.' and cont = 1.
-	* edit da tabela ti_source *
-	Else if lv_texy cs '.'.
-clear ti_result.
- 
-clear ti_coment.
-	endif.
-endif.
+ld_fs = 'Teste'.
+
+BREAK-POINT.
+
+"Criação de Field Symbol
+FIELD-SYMBOLS <ld_fs> TYPE char10.
+
+ASSIGN ld_fs to <ld_fs>.
+
+"Verificaidno se o Field Symbol tem refência.
+IF <ld_fs> IS ASSIGNED.
+  WRITE 'Tem referência.'.
+ELSE.
+  WRITE 'Não tem referência.'.
+ENDIF.
+
+"Limpando referência do Field Symbol
+UNASSIGN <ld_fs>.
+
+
+*** Fim - HUGOANSILVA ***
