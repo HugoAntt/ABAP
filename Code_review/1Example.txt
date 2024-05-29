@@ -1,35 +1,122 @@
-Data: ti_result type string,
-      cont type i,
-      lv_saida type string,
-      ti_coment type string.
- 
-Read report ztest (ti_source)
- 
-loop at ti_source into lv text.
- 
-If line_exists (ti_result).
-cont = 0.
- 
-if lv_text cs 'if'.
-cont = 2.
-endif.
- 
-if lv_text cs 'select' and cont <> 2.
-	lv_saida = line_index (ti_result = lv_text)	
-ti result[lv_saida] = lv_text.
-	lv_saida = line_index (ti_coment = lv_text)
-ti_coment[lv_saida] = |'*' {lv_text}|.
+*&---------------------------------------------------------------------*
+*& Report ZALV_X9
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zalv_x9.
 
-	If lv_text cs 'For all entries'.
-	cont = 1.
- 
-       	Elseif lv_text cs '.' and cont = 1.
-	* edit da tabela ti_source *
-	Else if lv_texy cs '.'.
-clear ti_result.
- 
-clear ti_coment.
-	endif.
-endif.
 
-SO10
+*[14:48] Barros, Lucas Teixeira de Moura
+*DATA(lo_code_review) = NEW zcl_code_review( ).
+*[14:50] Barros, Lucas Teixeira de Mour
+
+"Declaração da classe.
+DATA(lo_code_review) = NEW zcl_code_review( ).
+
+DATA: ti_result      TYPE TABLE OF zty_code.
+
+
+SELECTION-SCREEN BEGIN OF BLOCK b1.
+  PARAMETERS p_prog TYPE znome_programa.
+SELECTION-SCREEN END OF BLOCK b1.
+
+
+SELECT obj_name FROM tadir WHERE obj_name = p_prog.
+
+  IF sy-subrc = 0.
+    ti_result = lo_code_review->verificar_fae( p_prog ).
+  ELSE.
+    MESSAGE 'Programa não encontrado. Por favor, digite novamente.' TYPE 'I'.
+    RETURN.
+  ENDIF.
+
+  IF ti_result IS INITIAL.
+    MESSAGE 'Esse programa não possui Select com For all entries ou todos os for all entries estão sendo vericados pelo if. ' TYPE 'I'.
+    RETURN.
+  ENDIF.
+  
+  BREAK-POINT.
+    
+*** Exibir o resultado em um ALV
+    CLASS lcl_display_alv DEFINITION.
+PUBLIC SECTION.
+  METHODS: display_errors RAISING cx_salv_not_found cx_salv_existing cx_salv_wrong_call cx_salv_msg.
+ENDCLASS.
+
+CLASS lcl_display_alv IMPLEMENTATION.
+METHOD display_errors.
+  DATA: lo_alv     TYPE REF TO cl_salv_table,
+        lo_columns TYPE REF TO cl_salv_columns_table,
+        lo_column  TYPE REF TO cl_salv_column.
+
+  TRY.
+      cl_salv_table=>factory(
+        IMPORTING
+          r_salv_table = lo_alv
+        CHANGING
+          t_table      = ti_result ).
+    CATCH cx_salv_msg INTO DATA(lx_message).
+      MESSAGE lx_message->get_text( ) TYPE 'E'.
+      RETURN.
+  ENDTRY. 
+
+  lo_columns = lo_alv->get_columns( ).
+
+  " Definir títulos das colunas
+  lo_column = lo_columns->get_column( 'INDEX' ).
+  lo_column->set_short_text( 'Linha' ).
+
+  lo_column = lo_columns->get_column( 'TEXT' ).
+  lo_column->set_short_text( 'Código' ).
+
+  lo_alv->display( ).
+
+  " Adicionar botão de correção na toolbar
+  TRY.
+      lo_functions = lo_alv->get_functions( ).
+      lo_functions->add_function(
+        name = 'CORRIGIR'
+        text = 'Corrigir'
+        icon = '@15@'
+        tooltip = 'Corrigir erro selecionado'
+        position = if_salv_c_function_position=>right_of_salv_functions
+      ).
+    CATCH cx_salv_method_not_supported INTO DATA(lx_method_not_supported).
+      MESSAGE lx_method_not_supported->get_text( ) TYPE 'E'.
+      RETURN.
+  ENDTRY.
+  " Definir eventos
+  lo_events = lo_alv->get_event( ).
+  SET HANDLER me->handle_user_command FOR lo_events.
+  lo_alv->display( ).
+ENDMETHOD.
+METHOD handle_user_command.
+  CASE e_salv_function.
+    WHEN 'CORRIGIR'.
+      lo_code_review->corrigir_fae( p_prog ).
+  ENDCASE.
+ENDMETHOD.
+METHOD correct_error.
+  " Implementar a lógica de correção aqui
+  MESSAGE 'Erro corrigido com sucesso' TYPE 'S'.
+ENDMETHOD.
+
+ENDCLASS.
+ENDMETHOD.
+ENDCLASS.
+
+
+
+*START-OF-SELECTION.
+*  DATA(lo_display) = NEW lcl_display_alv( ).
+*  TRY.
+*      lo_display->display_errors( ).
+*    CATCH cx_salv_not_found INTO DATA(lx_not_found).
+*      MESSAGE lx_not_found->get_text( ) TYPE 'E'.
+*    CATCH cx_salv_existing INTO DATA(lx_existing).
+*      MESSAGE lx_existing->get_text( ) TYPE 'E'.
+*    CATCH cx_salv_wrong_call INTO DATA(lx_wrong_call).
+*      MESSAGE lx_wrong_call->get_text( ) TYPE 'E'.
+*    CATCH cx_salv_msg INTO DATA(lx_message).
+*      MESSAGE lx_message->get_text( ) TYPE 'E'.
+*  ENDTRY.
