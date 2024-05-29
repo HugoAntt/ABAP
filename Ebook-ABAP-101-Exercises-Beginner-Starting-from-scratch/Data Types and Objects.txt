@@ -1,0 +1,36 @@
+*&---------------------------------------------------------------------*
+*& Report ZDATA_TYPES_OBJECTS
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zdata_types_objects.
+*** Ini - HUGOANSILVA - TEXTO - 29.05.2024 08:58:10 ***
+
+*-Declare a TYPE as a character with 10 positions.
+*-Declare an integer.
+*-Declare a type as a number with 7 positions.
+*-Declare a date type.
+*-Declare a time type.
+*-Declare a structure type with 5 fields, each field with the same types from exercises 1 to 5.
+*-
+*-
+*-
+*-
+*-
+
+DATA: ld_n1 TYPE c LENGTH 10,
+      ld_n2 TYPE i,
+      ld_n3 TYPE n LENGTH 7,
+      ld_n4 TYPE d,
+      ld_n5 TYPE t.
+
+TYPES: BEGIN OF ls_customer_structure,
+         name            TYPE ld_n1,
+         n_employees     LIKE ld_n2,
+         unpaid_invoices TYPE ld_n3,
+         creation_date   TYPE ld_n4,
+         last_changed_at TYPE ld_n5,
+       END OF ls_customer_structure.
+
+
+*** Fim - HUGOANSILVA ***
