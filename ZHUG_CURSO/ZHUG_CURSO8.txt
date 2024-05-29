@@ -1,16 +1,14 @@
-*&---------------------------------------------------------------------*
+ *&---------------------------------------------------------------------*
 *& Report ZHUG_CURSO8
 *&---------------------------------------------------------------------*
 *&
 *&---------------------------------------------------------------------*
 REPORT ZHUG_CURSO8.
 
-TYPES ly_nome TYPE char100.
+TYPES ly_scarr TYPE scarr.
 
-"Ambas Variáveis armazenadas em um único tipo. 
-DATA: ld_nome TYPE ly_nome,
-      ld_nome2 TYPE ly_nome.
+DATA ls_nome TYPE scarr.
 
-ld_nome = 'José'.
+*ld_nome = 'José'.
 
 BREAK-POINT.
