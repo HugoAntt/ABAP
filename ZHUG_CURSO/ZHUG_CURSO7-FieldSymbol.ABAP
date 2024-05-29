@@ -6,7 +6,7 @@
 REPORT zhug_curso7.
 *** Ini - HUGOANSILVA - TEXTO - 23.05.2024 15:31:50 ***
 
-"Há declaração de estruturas e tabela interna, caso haja dúvidas.
+"Há declaração de estruturas e tabela interna, caso haja dúvidas......
 DATA: ld_varname TYPE char30,
       ld_teste   TYPE char30,
       ls_scarr   TYPE scarr,
