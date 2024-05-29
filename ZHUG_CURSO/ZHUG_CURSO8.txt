@@ -1,14 +1,16 @@
- *&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
 *& Report ZHUG_CURSO8
 *&---------------------------------------------------------------------*
 *&
 *&---------------------------------------------------------------------*
 REPORT ZHUG_CURSO8.
 
-TYPES ly_scarr TYPE scarr.
+TYPES: ly_scarr TYPE scarr,
+       ly_scarr_table TYPE STANDARD TABLE OF ly_scarr.
 
-DATA ls_nome TYPE scarr.
-
+DATA: ls_scarr TYPE scarr,
+      lt_scarr TYPE ly_scarr_table.
+   
 *ld_nome = 'José'.
 
 BREAK-POINT.
