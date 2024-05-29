@@ -16,7 +16,7 @@ REPORT zdata_types_objects.
 *-Declare a structure type with the following components of the global structure SFLIGHT:
 *CARRID, CONNID, FLDATE, PRICE, CURRENCY, PLANETYPE, SEATSMAX and SEATSOCC.
 
-*-Declare a structure type with the following components of the global structure SBOOK: 
+*-Declare a structure type with the following components of the global structure SBOOK:
 *CARRID, CONNID, FLDATE, BOOKID, CUSTOMID.
 *-
 *-
@@ -40,6 +40,16 @@ TYPES: BEGIN OF ls_sflight,
          seatsmax  TYPE sflight-seatsmax,
          seatsocc  TYPE sflight-seatsocc,
        END OF ls_sflight.
+
+BREAK-POINT.
+
+TYPES: BEGIN OF gs_sbook,
+         carrid   TYPE ls_sbook-carrid,
+         connid   TYPE ls_sbook-connid,
+         fldate   TYPE ls_sbook-fldate,
+         bookid   TYPE ls_sbook-bookid,
+         customid TYPE ls_sbook-customid,
+       END OF gs_sbook.
 
 
 TYPES: BEGIN OF ls_customer_structure,
