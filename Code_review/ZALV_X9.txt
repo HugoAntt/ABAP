@@ -1,18 +1,12 @@
-*&---------------------------------------------------------------------*
-*& Report ZALV_X9
-*&---------------------------------------------------------------------*
-*&
-*&---------------------------------------------------------------------*
 REPORT zalv_x9.
 
-"Declaração da classe.
+" Declaração da classe.
 DATA lo_code_review TYPE REF TO zcl_code_review.
 
 CREATE OBJECT lo_code_review.
 
-DATA: ti_result      TYPE TABLE OF zty_code.
+DATA: ti_result TYPE TABLE OF zty_code.
 
-BREAK-POINT.
 
 SELECTION-SCREEN BEGIN OF BLOCK b1.
   PARAMETERS p_prog TYPE znome_programa.
@@ -31,90 +25,361 @@ ELSE.
 ENDIF.
 
 IF ti_result IS INITIAL.
-  MESSAGE 'Esse programa não possui Select com For all entries ou todos os for all entries estão sendo vericados pelo if. ' TYPE 'I'.
+  MESSAGE 'Esse programa não possui Select com For all entries ou todos os for all entries estão sendo verificados pelo if.' TYPE 'I'.
   RETURN.
 ENDIF.
 
+"--------------------------------------------------------------------------------------------------------------------------------
+*** Exibir o resultado em um ALV
+CLASS lcl_display_alv DEFINITION.
+  PUBLIC SECTION.
+    METHODS: display_errors.
+    METHODS: handle_user_command FOR EVENT user_command OF cl_gui_alv_grid
+                                    IMPORTING e_ucomm.
+    METHODS: correct_error.
+ENDCLASS.
 
+CLASS lcl_display_alv IMPLEMENTATION.
+  METHOD display_errors.
+    DATA: lo_alv_grid     TYPE REF TO cl_gui_alv_grid,
+          lo_container    TYPE REF TO cl_gui_custom_container,
+          lt_fieldcatalog TYPE lvc_t_fcat,
+          ls_fieldcat     TYPE lvc_s_fcat,
+          lx_conversion   TYPE REF TO cx_sy_conversion_no_number.
+
+    " Criar o contêiner para o ALV
+    CREATE OBJECT lo_container
+      EXPORTING
+        container_name = 'ALV_CONTAINER'.
+
+    " Criar o ALV Grid
+    CREATE OBJECT lo_alv_grid
+      EXPORTING
+        i_parent = lo_container.
+
+    " Definir o field catalog
+    CLEAR ls_fieldcat.
+    ls_fieldcat-fieldname = 'INDEX'.
+    ls_fieldcat-seltext = 'Linha'.
+    APPEND ls_fieldcat TO lt_fieldcatalog.
+
+    CLEAR ls_fieldcat.
+    ls_fieldcat-fieldname = 'TEXT'.
+    ls_fieldcat-seltext = 'Código'.
+    APPEND ls_fieldcat TO lt_fieldcatalog.
+
+    " Definir o layout
+    DATA: ls_layout TYPE lvc_s_layo.
+    ls_layout-zebra = 'X'.
+
+    TRY.
+        " Configurar o ALV Grid
+      CALL METHOD lo_alv_grid->set_table_for_first_display
+        EXPORTING
+          is_layout       = ls_layout
+        CHANGING
+          it_fieldcatalog = lt_fieldcatalog
+          it_outtab       = ti_result.
+
+        " Adicionar botão de correção na toolbar
+      DATA: lt_toolbar TYPE TABLE OF stb_button,
+            ls_toolbar TYPE stb_button.
+      ls_toolbar-function = 'CORRIGIR'.
+      ls_toolbar-icon     = '@15@'.
+      ls_toolbar-quickinfo = 'Corrigir'.
+      ls_toolbar-text     = 'Corrigir'.
+      ls_toolbar-butn_type = 'PUSHBUTTON'.
+      APPEND ls_toolbar TO lt_toolbar.
+
+      " Adicionar a toolbar ao ALV
+      CALL METHOD lo_alv_grid->set_toolbar_interactive.
+
+      " Definir eventos
+      SET HANDLER me->handle_user_command FOR lo_alv_grid.
+    CATCH cx_sy_conversion_no_number INTO lx_conversion.
+      MESSAGE lx_conversion->get_text( ) TYPE 'E'.
+      RETURN.
+    ENDTRY.
+  ENDMETHOD.
+
+  METHOD handle_user_command.
+    CASE e_ucomm.
+      WHEN 'CORRIGIR'.
+        lo_code_review->corrigir_fae( p_prog ).
+    ENDCASE.
+  ENDMETHOD.
+
+  METHOD correct_error.
+     " Implementar a lógica de correção aqui
+    MESSAGE 'Erro corrigido com sucesso' TYPE 'S'.
+  ENDMETHOD.
+
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA(lo_display) = NEW lcl_display_alv( ).
+  TRY.
+      lo_display->display_errors( ).
+  CATCH cx_sy_no_handler INTO DATA(lx_no_handler).
+    MESSAGE lx_no_handler->get_text( ) TYPE 'E'.
+  ENDTRY.
+
+INCLUDE zalv_x9_pbo_100o01.
+
+INCLUDE zalv_x9_pai_100i01.
+
+
+
+
+
+*REPORT zalv_x9.
+*
+*" Declaração da classe.
+*DATA lo_code_review TYPE REF TO zcl_code_review.
+*
+*CREATE OBJECT lo_code_review.
+*
+*DATA: ti_result TYPE TABLE OF zty_code.
+*
+*
+*SELECTION-SCREEN BEGIN OF BLOCK b1.
+*  PARAMETERS p_prog TYPE znome_programa.
+*SELECTION-SCREEN END OF BLOCK b1.
+*
+*SELECT obj_name
+*  FROM tadir
+*  INTO TABLE @DATA(lt_select)
+*  WHERE obj_name = @p_prog.
+*
+*IF sy-subrc = 0.
+*  ti_result = lo_code_review->verificar_fae( nome_programa = p_prog ).
+*ELSE.
+*  MESSAGE 'Programa não encontrado. Por favor, digite novamente.' TYPE 'I'.
+*  RETURN.
+*ENDIF.
+*
+*IF ti_result IS INITIAL.
+*  MESSAGE 'Esse programa não possui Select com For all entries ou todos os for all entries estão sendo verificados pelo if.' TYPE 'I'.
+*  RETURN.
+*ENDIF.
+*
+*"--------------------------------------------------------------------------------------------------------------------------------
 **** Exibir o resultado em um ALV
 *CLASS lcl_display_alv DEFINITION.
 *  PUBLIC SECTION.
-*    METHODS: display_errors RAISING cx_salv_not_found cx_salv_existing cx_salv_wrong_call cx_salv_msg.
+*    METHODS: display_errors.
+*    METHODS: handle_user_command FOR EVENT user_command OF cl_gui_alv_grid
+*      IMPORTING e_ucomm.
+*    METHODS: correct_error.
 *ENDCLASS.
 *
 *CLASS lcl_display_alv IMPLEMENTATION.
 *  METHOD display_errors.
-*    DATA: lo_alv     TYPE REF TO cl_salv_table,
-*          lo_columns TYPE REF TO cl_salv_columns_table,
-*          lo_column  TYPE REF TO cl_salv_column.
+*    DATA: lo_alv_grid     TYPE REF TO cl_gui_alv_grid,
+*          lo_container    TYPE REF TO cl_gui_custom_container,
+*          lt_fieldcatalog TYPE lvc_t_fcat,
+*          ls_fieldcat     TYPE lvc_s_fcat.
 *
-*    TRY.
-*        cl_salv_table=>factory(
-*          IMPORTING
-*            r_salv_table = lo_alv
-*          CHANGING
-*            t_table      = ti_result ).
-*      CATCH cx_salv_msg INTO DATA(lx_message).
-*        MESSAGE lx_message->get_text( ) TYPE 'E'.
-*        RETURN.
-*    ENDTRY.
+*    " Criar o contêiner para o ALV
+*    CREATE OBJECT lo_container
+*      EXPORTING
+*        container_name = 'ALV_CONTAINER'.
 *
-*    lo_columns = lo_alv->get_columns( ).
+*    " Criar o ALV Grid
+*    CREATE OBJECT lo_alv_grid
+*      EXPORTING
+*        i_parent = lo_container.
 *
-*    " Definir títulos das colunas
-*    lo_column = lo_columns->get_column( 'INDEX' ).
-*    lo_column->set_short_text( 'Linha' ).
+*    " Definir o field catalog
+*    CLEAR ls_fieldcat.
+*    ls_fieldcat-fieldname = 'INDEX'.
+*    ls_fieldcat-seltext = 'Linha'.
+*    APPEND ls_fieldcat TO lt_fieldcatalog.
 *
-*    lo_column = lo_columns->get_column( 'TEXT' ).
-*    lo_column->set_short_text( 'Código' ).
+*    CLEAR ls_fieldcat.
+*    ls_fieldcat-fieldname = 'TEXT'.
+*    ls_fieldcat-seltext = 'Código'.
+*    APPEND ls_fieldcat TO lt_fieldcatalog.
 *
-*    lo_alv->display( ).
+*    " Definir o layout
+*    DATA: ls_layout TYPE lvc_s_layo.
+*    ls_layout-zebra = 'X'.
+*
+*    " Configurar o ALV Grid
+*    CALL METHOD lo_alv_grid->set_table_for_first_display
+*      EXPORTING
+*        is_layout       = ls_layout
+*      CHANGING
+*        it_fieldcatalog = lt_fieldcatalog
+*        it_outtab       = ti_result.
 *
 *    " Adicionar botão de correção na toolbar
-*    TRY.
-*        lo_functions = lo_alv->get_functions( ).
-*        lo_functions->add_function(
-*          name = 'CORRIGIR'
-*          text = 'Corrigir'
-*          icon = '@15@'
-*          tooltip = 'Corrigir erro selecionado'
-*          position = if_salv_c_function_position=>right_of_salv_functions
-*        ).
-*      CATCH cx_salv_method_not_supported INTO DATA(lx_method_not_supported).
-*        MESSAGE lx_method_not_supported->get_text( ) TYPE 'E'.
-*        RETURN.
-*    ENDTRY.
+*    DATA: lt_toolbar TYPE TABLE OF stb_button,
+*          ls_toolbar TYPE stb_button.
+*          ls_toolbar-function = 'CORRIGIR'.
+*          ls_toolbar-icon     = '@15@'.
+*          ls_toolbar-quickinfo = 'Corrigir'.
+*          ls_toolbar-text     = 'Corrigir'.
+*          ls_toolbar-butn_type = 'PUSHBUTTON'.
+*    APPEND ls_toolbar TO lt_toolbar.
+*
+*    " Adicionar a toolbar ao ALV
+*    CALL METHOD lo_alv_grid->set_toolbar_interactive.
+*
 *    " Definir eventos
-*    lo_events = lo_alv->get_event( ).
-*    SET HANDLER me->handle_user_command FOR lo_events.
-*    lo_alv->display( ).
+*    SET HANDLER me->handle_user_command FOR lo_alv_grid.
 *  ENDMETHOD.
+*
 *  METHOD handle_user_command.
-*    CASE e_salv_function.
+*    CASE e_ucomm.
 *      WHEN 'CORRIGIR'.
 *        lo_code_review->corrigir_fae( p_prog ).
 *    ENDCASE.
 *  ENDMETHOD.
+*
 *  METHOD correct_error.
 *    " Implementar a lógica de correção aqui
 *    MESSAGE 'Erro corrigido com sucesso' TYPE 'S'.
 *  ENDMETHOD.
 *
 *ENDCLASS.
-*ENDMETHOD.
-*ENDCLASS.
-
-
+*
 *START-OF-SELECTION.
 *  DATA(lo_display) = NEW lcl_display_alv( ).
 *  TRY.
 *      lo_display->display_errors( ).
-*    CATCH cx_salv_not_found INTO DATA(lx_not_found).
-*      MESSAGE lx_not_found->get_text( ) TYPE 'E'.
-*    CATCH cx_salv_existing INTO DATA(lx_existing).
-*      MESSAGE lx_existing->get_text( ) TYPE 'E'.
-*    CATCH cx_salv_wrong_call INTO DATA(lx_wrong_call).
-*      MESSAGE lx_wrong_call->get_text( ) TYPE 'E'.
-*    CATCH cx_salv_msg INTO DATA(lx_message).
-*      MESSAGE lx_message->get_text( ) TYPE 'E'.
+*    CATCH cx_sy_no_handler INTO DATA(lx_no_handler).
+*      MESSAGE lx_no_handler->get_text( ) TYPE 'E'.
 *  ENDTRY.
+*
+*  INCLUDE zalv_x9_pbo_100o01.
+*
+*  INCLUDE zalv_x9_pai_100i01.
+*
+
+
+
+
+*REPORT zalv_x9.
+*
+*"Declaração da classe.
+*DATA lo_code_review TYPE REF TO zcl_code_review.
+*
+*CREATE OBJECT lo_code_review.
+*
+*DATA: ti_result      TYPE TABLE OF zty_code.
+*
+*BREAK-POINT.
+*
+*SELECTION-SCREEN BEGIN OF BLOCK b1.
+*  PARAMETERS p_prog TYPE znome_programa.
+*SELECTION-SCREEN END OF BLOCK b1.
+*
+*SELECT obj_name
+*  FROM tadir
+*  INTO TABLE @DATA(lt_select)
+*  WHERE obj_name = @p_prog.
+*
+*IF sy-subrc = 0.
+*  ti_result = lo_code_review->verificar_fae( nome_programa = p_prog ).
+*ELSE.
+*  MESSAGE 'Programa não encontrado. Por favor, digite novamente.' TYPE 'I'.
+*  RETURN.
+*ENDIF.
+*
+*IF ti_result IS INITIAL.
+*  MESSAGE 'Esse programa não possui Select com For all entries ou todos os for all entries estão sendo vericados pelo if. ' TYPE 'I'.
+*  RETURN.
+*ENDIF.
+*
+*"--------------------------------------------------------------------------------------------------------------------------------
+**** Exibir o resultado em um ALV
+*CLASS lcl_display_alv DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS: display_errors.
+*    METHODS: handle_user_command FOR EVENT added_function OF cl_gui_alv_grid
+*                                    IMPORTING e_salv_function.
+*    METHODS: correct_error.
+*ENDCLASS.
+*
+*CLASS lcl_display_alv IMPLEMENTATION.
+*  METHOD display_errors.
+*    DATA: lo_alv_grid     TYPE REF TO cl_gui_alv_grid,
+*          lo_container    TYPE REF TO cl_gui_custom_container,
+*          lt_fieldcatalog TYPE lvc_t_fcat,
+*          ls_fieldcat     TYPE lvc_s_fcat.
+*
+*    " Criar o contêiner para o ALV
+*    CREATE OBJECT lo_container
+*      EXPORTING
+*        container_name = 'ALV_CONTAINER'.
+*
+*    " Criar o ALV Grid
+*    CREATE OBJECT lo_alv_grid
+*      EXPORTING
+*        i_parent = lo_container.
+*
+*    " Definir o fieldcatalog
+*    CLEAR ls_fieldcat.
+*    ls_fieldcat-fieldname = 'INDEX'.
+*    ls_fieldcat-seltext_s = 'Linha'.
+*    APPEND ls_fieldcat TO lt_fieldcatalog.
+*
+*    CLEAR ls_fieldcat.
+*    ls_fieldcat-fieldname = 'TEXT'.
+*    ls_fieldcat-seltext_s = 'Código'.
+*    APPEND ls_fieldcat TO lt_fieldcatalog.
+*
+*    " Definir o layout
+*    DATA: lt_layout TYPE lvc_s_layo.
+*    lt_layout-zebra = 'X'.
+*
+*    " Configurar o ALV Grid
+*    CALL METHOD lo_alv_grid->set_table_for_first_display
+*      EXPORTING
+*        is_layout       = lt_layout
+*      CHANGING
+*        it_fieldcatalog = lt_fieldcatalog
+*        it_outtab       = ti_result.
+*
+*    " Adicionar botão de correção na toolbar
+*    DATA: lt_toolbar TYPE TABLE OF stb_button,
+*          ls_toolbar TYPE stb_button.
+*    ls_toolbar-function = 'CORRIGIR'.
+*    ls_toolbar-icon     = '@15@'.
+*    ls_toolbar-quickinfo = 'Corrigir'.
+*    ls_toolbar-text     = 'Corrigir'.
+*    ls_toolbar-butn_type = 'PUSHBUTTON'.
+*    APPEND ls_toolbar TO lt_toolbar.
+*
+*    CALL METHOD lo_alv_grid->set_toolbar_interactive
+*      EXPORTING
+*        it_toolbar = lt_toolbar.
+*
+*    " Definir eventos
+*    SET HANDLER me->handle_user_command FOR lo_alv_grid.
+*  ENDMETHOD.
+*
+*  METHOD handle_user_command.
+*    CASE e_salv_function.
+*      WHEN 'CORRIGIR'.
+*        lo_code_review->corrigir_fae( p_prog ).
+*    ENDCASE.
+*  ENDMETHOD.
+*
+*  METHOD correct_error.
+*     " Implementar a lógica de correção aqui
+*    MESSAGE 'Erro corrigido com sucesso' TYPE 'S'.
+*  ENDMETHOD.
+*
+*ENDCLASS.
+*
+*START-OF-SELECTION.
+*  DATA(lo_display) = NEW lcl_display_alv( ).
+*  TRY.
+*      lo_display->display_errors( ).
+*  ENDTRY.
+*
+*INCLUDE zalv_x9_pbo_100o01.
+*
+*INCLUDE zalv_x9_pai_100i01.
