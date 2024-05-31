@@ -11,16 +11,15 @@ TYPES: ly_scarr       TYPE scarr,
 DATA: ls_scarr TYPE scarr,
       lt_scarr TYPE ly_scarr_table.
 
-BREAK-POINT. 
+BREAK-POINT.
 
 "----------------------------------------------------------
 
 TYPES: BEGIN OF ly_scarr,
-         id   TYPE scarr-carrid,
-         nome TYPE scarr-carrname,
+         id      TYPE i,
+         include TYPE scarr,
        END OF ly_scarr.
 
 DATA ls_scarr TYPE ly_scarr.
 
 BREAK-POINT.
-
