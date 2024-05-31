@@ -1,0 +1,43 @@
+Declaração da Classe:
+ABAP
+Copy code
+DATA: lo_code_review TYPE REF TO zcl_code_review.
+DATA: ti_result TYPE TABLE OF zty_code.
+Nesta parte, estamos declarando duas variáveis. lo_code_review é uma referência a um objeto da classe zcl_code_review. ti_result é uma tabela do tipo zty_code, que provavelmente é uma estrutura de dados definida localmente no sistema SAP.
+
+Criação do Objeto:
+ABAP
+Copy code
+CREATE OBJECT lo_code_review.
+Aqui, estamos criando um objeto da classe zcl_code_review e atribuindo sua referência à variável lo_code_review. Isso permite que usemos métodos e atributos da classe zcl_code_review.
+
+Seleção na Tabela TADIR:
+ABAP
+Copy code
+SELECT obj_name
+  FROM tadir
+  INTO TABLE @DATA(lt_select)
+  WHERE obj_name = @p_prog.
+Nesta parte, estamos realizando uma seleção na tabela TADIR, que geralmente contém informações sobre os objetos ABAP (como programas, transações, etc.). Estamos selecionando os nomes dos objetos onde obj_name é igual ao valor do parâmetro p_prog e armazenando os resultados na tabela interna lt_select.
+
+Verificação do Resultado da Seleção:
+ABAP
+Copy code
+IF sy-subrc = 0.
+  ti_result = lo_code_review->verificar_fae( nome_programa = p_prog ).
+ELSE.
+  MESSAGE 'Programa não encontrado. Por favor, digite novamente.' TYPE 'I'.
+  RETURN.
+ENDIF.
+Aqui, estamos verificando se a operação de seleção foi bem-sucedida (ou seja, se sy-subrc é igual a zero). Se for bem-sucedida, chamamos o método verificar_fae do objeto lo_code_review, passando o nome do programa p_prog como parâmetro. Os resultados são armazenados na tabela ti_result. Caso contrário, exibimos uma mensagem informando que o programa não foi encontrado.
+
+Verificação de Resultado Vazio:
+ABAP
+Copy code
+IF ti_result IS INITIAL.
+  MESSAGE 'Esse programa não possui Select com For all entries ou todos os for all entries estão sendo verificados pelo if.' TYPE 'I'.
+  RETURN.
+ENDIF.
+Aqui, estamos verificando se a tabela ti_result está vazia. Se estiver vazia, exibimos uma mensagem informando que o programa não possui SELECT com FOR ALL ENTRIES ou que todos os FOR ALL ENTRIES estão sendo verificados por meio de IF.
+
+Em resumo, este trecho de código ABAP declara uma classe, cria um objeto dessa classe, realiza uma seleção na tabela TADIR com base em um parâmetro fornecido pelo usuário, executa uma verificação com base no resultado da seleção e exibe mensagens de acordo com os resultados obtidos.
