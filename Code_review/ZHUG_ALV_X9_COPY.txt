@@ -1,0 +1,138 @@
+*&---------------------------------------------------------------------*
+*& Report ZHUG_ALV_X9_COPY
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ZHUG_ALV_X9_COPY.
+*** Ini - HUGOANSILVA - TEXTO - 30.05.2024 17:13:06 ***
+
+" Declaração da classe.
+DATA lo_code_review TYPE REF TO zcl_code_review.
+
+CREATE OBJECT lo_code_review.
+
+DATA: ti_result TYPE TABLE OF zty_code.
+
+
+SELECTION-SCREEN BEGIN OF BLOCK b1.
+  PARAMETERS p_prog TYPE znome_programa.
+SELECTION-SCREEN END OF BLOCK b1.
+
+SELECT obj_name
+  FROM tadir
+  INTO TABLE @DATA(lt_select)
+  WHERE obj_name = @p_prog.
+
+IF sy-subrc = 0.
+  ti_result = lo_code_review->verificar_fae( nome_programa = p_prog ).
+ELSE.
+  MESSAGE 'Programa não encontrado. Por favor, digite novamente.' TYPE 'I'.
+  RETURN.
+ENDIF.
+
+IF ti_result IS INITIAL.
+  MESSAGE 'Esse programa não possui Select com For all entries ou todos os for all entries estão sendo verificados pelo if.' TYPE 'I'.
+  RETURN.
+ENDIF.
+
+"--------------------------------------------------------------------------------------------------------------------------------
+*** Exibir o resultado em um ALV
+CLASS lcl_display_alv DEFINITION.
+  PUBLIC SECTION.
+    METHODS: display_errors.
+    METHODS: handle_user_command FOR EVENT user_command OF cl_gui_alv_grid
+                                    IMPORTING e_ucomm.
+    METHODS: correct_error.
+ENDCLASS.
+
+CLASS lcl_display_alv IMPLEMENTATION.
+  METHOD display_errors.
+    DATA: lo_alv_grid     TYPE REF TO cl_gui_alv_grid,
+          lo_container    TYPE REF TO cl_gui_custom_container,
+          lt_fieldcatalog TYPE lvc_t_fcat,
+          ls_fieldcat     TYPE lvc_s_fcat,
+          lx_conversion   TYPE REF TO cx_sy_conversion_no_number.
+
+    " Criar o contêiner para o ALV
+    CREATE OBJECT lo_container
+      EXPORTING
+        container_name = 'ALV_CONTAINER'.
+
+    " Criar o ALV Grid
+    CREATE OBJECT lo_alv_grid
+      EXPORTING
+        i_parent = lo_container.
+
+    " Definir o field catalog
+    CLEAR ls_fieldcat.
+    ls_fieldcat-fieldname = 'INDEX'.
+    ls_fieldcat-seltext = 'Linha'.
+    APPEND ls_fieldcat TO lt_fieldcatalog.
+
+    CLEAR ls_fieldcat.
+    ls_fieldcat-fieldname = 'TEXT'.
+    ls_fieldcat-seltext = 'Código'.
+    APPEND ls_fieldcat TO lt_fieldcatalog.
+
+    " Definir o layout
+    DATA: ls_layout TYPE lvc_s_layo.
+    ls_layout-zebra = 'X'.
+
+    TRY.
+        " Configurar o ALV Grid
+      CALL METHOD lo_alv_grid->set_table_for_first_display
+        EXPORTING
+          is_layout       = ls_layout
+        CHANGING
+          it_fieldcatalog = lt_fieldcatalog
+          it_outtab       = ti_result.
+
+        " Adicionar botão de correção na toolbar
+      DATA: lt_toolbar TYPE TABLE OF stb_button,
+            ls_toolbar TYPE stb_button.
+      ls_toolbar-function = 'CORRIGIR'.
+      ls_toolbar-icon     = '@15@'.
+      ls_toolbar-quickinfo = 'Corrigir'.
+      ls_toolbar-text     = 'Corrigir'.
+      ls_toolbar-butn_type = 'PUSHBUTTON'.
+      APPEND ls_toolbar TO lt_toolbar.
+
+      " Adicionar a toolbar ao ALV
+      CALL METHOD lo_alv_grid->set_toolbar_interactive.
+
+      " Definir eventos
+      SET HANDLER me->handle_user_command FOR lo_alv_grid.
+    CATCH cx_sy_conversion_no_number INTO lx_conversion.
+      MESSAGE lx_conversion->get_text( ) TYPE 'E'.
+      RETURN.
+    ENDTRY.
+  ENDMETHOD.
+
+  METHOD handle_user_command.
+    CASE e_ucomm.
+      WHEN 'CORRIGIR'.
+        lo_code_review->corrigir_fae( p_prog ).
+    ENDCASE.
+  ENDMETHOD.
+
+  METHOD correct_error.
+     " Implementar a lógica de correção aqui
+    MESSAGE 'Erro corrigido com sucesso' TYPE 'S'.
+  ENDMETHOD.
+
+ENDCLASS.
+
+START-OF-SELECTION.
+  DATA(lo_display) = NEW lcl_display_alv( ).
+  TRY.
+      lo_display->display_errors( ).
+  CATCH cx_sy_no_handler INTO DATA(lx_no_handler).
+    MESSAGE lx_no_handler->get_text( ) TYPE 'E'.
+  ENDTRY.
+
+INCLUDE zalv_x9_pbo_100o01.
+
+INCLUDE zalv_x9_pai_100i01.
+
+
+*** Fim - HUGOANSILVA ***
