@@ -6,6 +6,24 @@ Aqui estão as informações organizadas e detalhadas:
 - **Abapzombiee**
 
 **Ferramentas SAP ABAP:**
+
+------------------------------------------------------------------
+Para verificar tabelas transparentes no SAP, você pode acionar a transação SE16 para ver seus registros e SE11 para ver seus campos e descrições.
+
+Exemplos:
+
+Tabela de Ordens de Compra:
+
+A tabela transparente correspondente às ordens de compra é a EKKO. Esta tabela armazena informações mestre sobre as ordens de compra, como data, 
+local de entrega, etc.
+Tabela de Itens de Ordens de Compra:
+
+A tabela transparente correspondente aos itens de ordens de compra é a EKPO. Esta tabela contém os detalhes dos itens incluídos em cada ordem de compra, 
+como quantidade, preço, etc.
+Essas transações e tabelas são frequentemente utilizadas para acessar e manipular dados dentro do SAP, facilitando o gerenciamento de informações 
+relacionadas às operações de compra e venda.
+-----------------------------------------------------
+
 1. **SE38** - Editor de Programas ABAP:
    - Utilizado para criar, modificar e visualizar programas ABAP.
 
