@@ -18,17 +18,19 @@ SELECTION-SCREEN END OF BLOCK b1.
 "Range com Select
 
 DATA: ld_matnr TYPE zcurso_so_item-matnr,
-      lt_item TYPE STANDARD TABLE OF zcurso_so_item.
+      ld_price TYPE zcurso_so_item-price_un.
 
 SELECTION-SCREEN BEGIN OF BLOCK b1.
   SELECT-OPTIONS s_matnr FOR ld_matnr.
+  SELECT-OPTIONS s_price FOR ld_price.
 SELECTION-SCREEN END OF BLOCK b1.
 
-START-OF-SELECTION. 
- 
- SELECT *
-   INTO TABLE lt_item
-   FROM zcurso_so_item
-   WHERE matnr IN s_matnr().
+START-OF-SELECTION.
+  DATA lt_item  TYPE STANDARD TABLE OF zcurso_so_item.
 
-*** Fim - HUGOANSILVA ***
+  SELECT *
+    INTO TABLE lt_item
+    FROM zcurso_so_item
+    WHERE matnr IN s_matnr() AND price_un IN s_price().
+
+*** Fim - HUGOANSILVA *** 
