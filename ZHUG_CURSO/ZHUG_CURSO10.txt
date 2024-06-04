@@ -1,0 +1,17 @@
+*&---------------------------------------------------------------------*
+*& Report ZHUG_CURSO10
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zhug_curso10.
+*** Ini - HUGOANSILVA - TEXTO - 04.06.2024 08:39:13 ***
+
+*DATA lt_kunnr_r TYPE RANGE OF kunnr.
+DATA ld_kunnr TYPE kunnr.
+
+SELECTION-SCREEN BEGIN OF BLOCK b1.
+  "Criação do Range
+  SELECT-OPTIONS s_kunnr FOR ld_kunnr.
+SELECTION-SCREEN END OF BLOCK b1.
+
+*** Fim - HUGOANSILVA ***
