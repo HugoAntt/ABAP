@@ -14,4 +14,21 @@ SELECTION-SCREEN BEGIN OF BLOCK b1.
   SELECT-OPTIONS s_kunnr FOR ld_kunnr.
 SELECTION-SCREEN END OF BLOCK b1.
 
+"===============================================================
+"Range com Select
+
+DATA: ld_matnr TYPE zcurso_so_item-matnr,
+      lt_item TYPE STANDARD TABLE OF zcurso_so_item.
+
+SELECTION-SCREEN BEGIN OF BLOCK b1.
+  SELECT-OPTIONS s_matnr FOR ld_matnr.
+SELECTION-SCREEN END OF BLOCK b1.
+
+START-OF-SELECTION. 
+ 
+ SELECT *
+   INTO TABLE lt_item
+   FROM zcurso_so_item
+   WHERE matnr IN s_matnr().
+
 *** Fim - HUGOANSILVA ***
