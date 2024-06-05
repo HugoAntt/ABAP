@@ -6,85 +6,206 @@
 REPORT zhug_armazena_linha.
 *** Ini - HUGOANSILVA - TEXTO - 05.06.2024 09:30:41 ***
 
-*REPORT Z_EDITABLE_ALV_GRID.
-
-* Declarações de variáveis
-DATA: ok_code            LIKE sy-ucomm,
-      save_ok            LIKE sy-ucomm,
-      g_container        TYPE scrfname VALUE 'Z_EDITABLE_ALV_GRID_CONT1',
-      g_grid             TYPE REF TO cl_gui_alv_grid,
-      g_custom_container TYPE REF TO cl_gui_custom_container,
-      gt_fieldcat        TYPE lvc_t_fcat,
-      gs_layout          TYPE lvc_s_layo,
-      g_max              TYPE i VALUE 100,
-      g_success          TYPE c.
-
-* Declarações de tabelas internas
-DATA: BEGIN OF gt_outtab OCCURS 0,
-        include TYPE sflight,
-      END OF gt_outtab.
-
-*---------------------------------------------------------------------*
-*       Classe local para manipular eventos do ALV Grid
-*---------------------------------------------------------------------*
-CLASS lcl_event_receiver DEFINITION.
+CLASS lcl_event_handler DEFINITION.
   PUBLIC SECTION.
-    METHODS:
-      handle_data_changed FOR EVENT data_changed OF cl_gui_alv_grid
-        IMPORTING er_data_changed.
+    METHODS: handle_added_function FOR EVENT added_function OF cl_salv_events_table
+      IMPORTING e_salv_function.
 ENDCLASS.
 
-CLASS lcl_event_receiver IMPLEMENTATION.
-  METHOD handle_data_changed.
-    DATA: ls_good TYPE lvc_s_modi,
-          l_price TYPE s_price,
-          ls_new  TYPE lvc_s_moce.
+DATA: lo_event_handler TYPE REF TO lcl_event_handler.
 
-    " Sua lógica de manipulação de eventos aqui
+CREATE OBJECT lo_event_handler.
+
+DATA: lo_code_review TYPE REF TO zcl_code_review,
+      it_result      TYPE TABLE OF zty_code.
+
+DATA: lo_alv              TYPE REF TO cl_salv_table,
+      lex_message         TYPE REF TO cx_salv_msg,
+      lo_layout_settings  TYPE REF TO cl_salv_layout,
+      lo_layout_key       TYPE        salv_s_layout_key,
+      lo_columns          TYPE REF TO cl_salv_columns_table,
+      lo_column           TYPE REF TO cl_salv_column,
+      lex_not_found       TYPE REF TO cx_salv_not_found,
+      lo_functions        TYPE REF TO cl_salv_functions_list,
+      lo_display_settings TYPE REF TO cl_salv_display_settings.
+
+TYPES: BEGIN OF ty_alv,
+         index       TYPE zty_code-index,
+         text        TYPE zty_code-text,
+         tabela      TYPE zty_code-tabela,
+         is_fae      TYPE /ACCGO/E_BOOLEAN,
+       END OF ty_alv.
+
+DATA: lt_zalv TYPE TABLE OF ty_alv,
+      ls_zalv TYPE ty_alv.
+
+CREATE OBJECT lo_code_review.
+
+SELECTION-SCREEN BEGIN OF BLOCK b1.
+  PARAMETERS: p_prog TYPE znome_programa.
+SELECTION-SCREEN END OF BLOCK b1.
+
+SELECT obj_name
+  FROM tadir
+  INTO TABLE @DATA(lt_select)
+  WHERE obj_name = @p_prog.
+
+IF sy-subrc = 0.
+  it_result = lo_code_review->verificar_fae( nome_programa = p_prog ).
+  lt_zalv[] = it_result[].
+ELSE.
+  MESSAGE 'Programa não encontrado. Por favor, digite novamente.' TYPE 'I'.
+  RETURN.
+ENDIF.
+
+IF it_result IS INITIAL.
+  MESSAGE 'Esse programa não possui Select com For All Entries ou todos For All Entries estão sendo verificados pelo IF' TYPE 'I'.
+  RETURN.
+ENDIF.
+
+TRY.
+    CALL METHOD cl_salv_table=>factory
+      IMPORTING
+        r_salv_table = lo_alv
+      CHANGING
+        t_table      = lt_zalv.
+
+    lo_alv->get_functions( )->set_all( abap_true ).
+    lo_alv->get_columns( )->set_optimize( abap_true ).
+    lo_alv->get_display_settings( )->set_list_header( 'For All Entries Check' ).
+    lo_alv->get_display_settings( )->set_striped_pattern( abap_true ).
+    lo_alv->get_selections( )->set_selection_mode( if_salv_c_selection_mode=>row_column ).
+    lo_alv->get_functions( )->set_export_spreadsheet( abap_false ).
+
+    SET HANDLER lo_event_handler->handle_added_function FOR lo_alv->get_event( ).
+
+  CATCH cx_salv_msg INTO DATA(lo_exception).
+    MESSAGE lo_exception TYPE 'I'.
+ENDTRY.
+
+TRY.
+    lo_columns = lo_alv->get_columns( ).
+    lo_columns->set_optimize( ).
+
+    lo_column = lo_columns->get_column( 'INDEX' ).
+    lo_column->set_short_text( 'Linha' ).
+    lo_column->set_medium_text( 'Linha Cód' ).
+    lo_column->set_long_text( 'Linha do Código' ).
+
+    lo_column = lo_columns->get_column( 'TEXT' ).
+    lo_column->set_short_text( 'Código' ).
+    lo_column->set_medium_text( 'Código' ).
+    lo_column->set_long_text( 'Código' ).
+
+    lo_column = lo_columns->get_column( 'TABELA' ).
+    lo_column->set_short_text( 'Tabela' ).
+    lo_column->set_medium_text( 'Tabela FAE' ).
+    lo_column->set_long_text( 'Tabela do For All Entries' ).
+  CATCH cx_salv_not_found INTO lex_not_found.
+*      » write some error handling
+ENDTRY.
+
+lo_alv->display( ).
+
+CLASS lcl_event_handler IMPLEMENTATION.
+  METHOD handle_added_function.
+    CASE e_salv_function.
+      WHEN '&FIX'.
+        lo_code_review->corrigir_fae(
+                        nome_programa = p_prog
+                        lt_select = lt_zalv
+                        ).
+
+        IF sy-subrc = 0.
+          MESSAGE 'Código corrigido com sucesso!' TYPE 'I'.
+          LEAVE TO SCREEN 0.
+*          LEAVE PROGRAM.
+        ENDIF.
+      WHEN OTHERS.
+        " Código para outras funções
+    ENDCASE.
   ENDMETHOD.
 ENDCLASS.
 
-*---------------------------------------------------------------------*
-*       Lógica principal
-*---------------------------------------------------------------------*
-START-OF-SELECTION.
+*REPORT Z_EDITABLE_ALV_GRID.
 
-  PERFORM build_field_catalog.
-  PERFORM build_data.
-
-  CREATE OBJECT g_custom_container
-    EXPORTING
-      container_name = g_container.
-
-  CREATE OBJECT g_grid
-    EXPORTING
-      i_parent = g_custom_container.
-  
-CALL METHOD g_grid->set_table_for_first_display
-       EXPORTING
-           it_toolbar_excluding = lt_exclude
-           is_layout            = gs_layout
-       CHANGING
-           it_fieldcatalog      = gt_fieldcat
-           it_outtab            = CAST #( gt_outtab ).
-
-
-  SET PF-STATUS 'STANDARD'.
-
-*&---------------------------------------------------------------------*
-*&      Form  build_field_catalog
-*&---------------------------------------------------------------------*
-FORM build_field_catalog.
-  " Construir o catálogo de campos aqui
-ENDFORM.
-
-*&---------------------------------------------------------------------*
-*&      Form  build_data
-*&---------------------------------------------------------------------*
-FORM build_data.
-  " Carregar dados da tabela aqui
-ENDFORM.
-
+** Declarações de variáveis
+*DATA: ok_code            LIKE sy-ucomm,
+*      save_ok            LIKE sy-ucomm,
+*      g_container        TYPE scrfname VALUE 'Z_EDITABLE_ALV_GRID_CONT1',
+*      g_grid             TYPE REF TO cl_gui_alv_grid,
+*      g_custom_container TYPE REF TO cl_gui_custom_container,
+*      gt_fieldcat        TYPE lvc_t_fcat,
+*      gs_layout          TYPE lvc_s_layo,
+*      g_max              TYPE i VALUE 100,
+*      g_success          TYPE c.
+*
+** Declarações de tabelas internas
+*DATA: BEGIN OF gt_outtab OCCURS 0,
+*        include TYPE sflight,
+*      END OF gt_outtab.
+*
+**---------------------------------------------------------------------*
+**       Classe local para manipular eventos do ALV Grid
+**---------------------------------------------------------------------*
+*CLASS lcl_event_receiver DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      handle_data_changed FOR EVENT data_changed OF cl_gui_alv_grid
+*        IMPORTING er_data_changed.
+*ENDCLASS.
+*
+*CLASS lcl_event_receiver IMPLEMENTATION.
+*  METHOD handle_data_changed.
+*    DATA: ls_good TYPE lvc_s_modi,
+*          l_price TYPE s_price,
+*          ls_new  TYPE lvc_s_moce.
+*
+*    " Sua lógica de manipulação de eventos aqui
+*  ENDMETHOD.
+*ENDCLASS.
+*
+**---------------------------------------------------------------------*
+**       Lógica principal
+**---------------------------------------------------------------------*
+*START-OF-SELECTION.
+*
+*  PERFORM build_field_catalog.
+*  PERFORM build_data.
+*
+*  CREATE OBJECT g_custom_container
+*    EXPORTING
+*      container_name = g_container.
+*
+*  CREATE OBJECT g_grid
+*    EXPORTING
+*      i_parent = g_custom_container.
+*
+*CALL METHOD g_grid->set_table_for_first_display
+*       EXPORTING
+*           it_toolbar_excluding = lt_exclude
+*           is_layout            = gs_layout
+*       CHANGING
+*           it_fieldcatalog      = gt_fieldcat
+*           it_outtab            = CAST #( gt_outtab ).
+*
+*
+*  SET PF-STATUS 'STANDARD'.
+*
+**&---------------------------------------------------------------------*
+**&      Form  build_field_catalog
+**&---------------------------------------------------------------------*
+*FORM build_field_catalog.
+*  " Construir o catálogo de campos aqui
+*ENDFORM.
+*
+**&---------------------------------------------------------------------*
+**&      Form  build_data
+**&---------------------------------------------------------------------*
+*FORM build_data.
+*  " Carregar dados da tabela aqui
+*ENDFORM.
+*
 
 
 *** Fim - HUGOANSILVA ***
