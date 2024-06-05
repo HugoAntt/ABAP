@@ -6,81 +6,85 @@
 REPORT zhug_armazena_linha.
 *** Ini - HUGOANSILVA - TEXTO - 05.06.2024 09:30:41 ***
 
-* Declaração de variáveis globais
-DATA: gt_dados        TYPE TABLE OF mara,
-      gs_dados        TYPE mara,
-      gt_selecionados TYPE TABLE OF mara.
+*REPORT Z_EDITABLE_ALV_GRID.
 
-* Definição da estrutura de dados para a tabela MARA
-TYPES: BEGIN OF ty_mara,
-         matnr TYPE matnr,
-         mtart TYPE mtart,
-       END OF ty_mara.
+* Declarações de variáveis
+DATA: ok_code            LIKE sy-ucomm,
+      save_ok            LIKE sy-ucomm,
+      g_container        TYPE scrfname VALUE 'Z_EDITABLE_ALV_GRID_CONT1',
+      g_grid             TYPE REF TO cl_gui_alv_grid,
+      g_custom_container TYPE REF TO cl_gui_custom_container,
+      gt_fieldcat        TYPE lvc_t_fcat,
+      gs_layout          TYPE lvc_s_layo,
+      g_max              TYPE i VALUE 100,
+      g_success          TYPE c.
 
-* Declaração da tabela interna para a ALV
-DATA: gt_alv TYPE TABLE OF ty_mara.
+* Declarações de tabelas internas
+DATA: BEGIN OF gt_outtab OCCURS 0,
+        include TYPE sflight,
+      END OF gt_outtab.
 
-* Declaração de variáveis de controle
-DATA: gv_grid   TYPE REF TO cl_gui_alv_grid,
-      gv_okcode TYPE sy-ucomm.
+*---------------------------------------------------------------------*
+*       Classe local para manipular eventos do ALV Grid
+*---------------------------------------------------------------------*
+CLASS lcl_event_receiver DEFINITION.
+  PUBLIC SECTION.
+    METHODS:
+      handle_data_changed FOR EVENT data_changed OF cl_gui_alv_grid
+        IMPORTING er_data_changed.
+ENDCLASS.
 
-* Selecionar dados da MARA e carregar na ALV
+CLASS lcl_event_receiver IMPLEMENTATION.
+  METHOD handle_data_changed.
+    DATA: ls_good TYPE lvc_s_modi,
+          l_price TYPE s_price,
+          ls_new  TYPE lvc_s_moce.
+
+    " Sua lógica de manipulação de eventos aqui
+  ENDMETHOD.
+ENDCLASS.
+
+*---------------------------------------------------------------------*
+*       Lógica principal
+*---------------------------------------------------------------------*
 START-OF-SELECTION.
-  SELECT * FROM mara INTO TABLE gt_dados UP TO 10 ROWS.
-  LOOP AT gt_dados INTO gs_dados.
-    MOVE-CORRESPONDING gs_dados TO gt_alv.
-  ENDLOOP.
 
-* Exibir ALV e permitir seleção de linhas
-  CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+  PERFORM build_field_catalog.
+  PERFORM build_data.
+
+  CREATE OBJECT g_custom_container
     EXPORTING
-      i_callback_program = sy-repid
-      it_fieldcat        = gt_fieldcat
-    TABLES
-      t_outtab           = gt_alv
-    EXCEPTIONS
-      program_error      = 1
-      OTHERS             = 2.
-  IF sy-subrc <> 0.
-    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-  ENDIF.
+      container_name = g_container.
 
-  CALL METHOD cl_gui_cfw=>flush.
+  CREATE OBJECT g_grid
+    EXPORTING
+      i_parent = g_custom_container.
+  
+CALL METHOD g_grid->set_table_for_first_display
+       EXPORTING
+           it_toolbar_excluding = lt_exclude
+           is_layout            = gs_layout
+       CHANGING
+           it_fieldcatalog      = gt_fieldcat
+           it_outtab            = CAST #( gt_outtab ).
+
 
   SET PF-STATUS 'STANDARD'.
 
-  LOOP AT gt_alv INTO gs_dados.
-    MODIFY gt_alv FROM gs_dados TRANSPORTING mtart WHERE matnr = gs_dados-matnr.
-  ENDLOOP.
-
-  CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
-    EXPORTING
-      i_callback_program = sy-repid
-      it_fieldcat        = gt_fieldcat
-    TABLES
-      t_outtab           = gt_alv
-    EXCEPTIONS
-      program_error      = 1
-      OTHERS             = 2.
-  IF sy-subrc <> 0.
-    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-  ENDIF.
-
-FORM user_command USING r_ucomm LIKE sy-ucomm
-                        rs_selfield TYPE slis_selfield.
-  CASE r_ucomm.
-    WHEN 'SELE'.
-      LOOP AT gt_alv INTO gs_dados WHERE selected = 'X'.
-        APPEND gs_dados TO gt_selecionados.
-      ENDLOOP.
-      CLEAR: gt_alv.
-      EXIT.
-    WHEN OTHERS.
-      CLEAR: gt_selecionados.
-  ENDCASE.
+*&---------------------------------------------------------------------*
+*&      Form  build_field_catalog
+*&---------------------------------------------------------------------*
+FORM build_field_catalog.
+  " Construir o catálogo de campos aqui
 ENDFORM.
+
+*&---------------------------------------------------------------------*
+*&      Form  build_data
+*&---------------------------------------------------------------------*
+FORM build_data.
+  " Carregar dados da tabela aqui
+ENDFORM.
+
 
 
 *** Fim - HUGOANSILVA ***
