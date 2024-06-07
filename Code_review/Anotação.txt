@@ -1,0 +1,2 @@
+Passar para uma nova tabela, todos os itens da tabela selecionada, as linhas que estiverem selecionadas, o campo 
+is_fae = true. 

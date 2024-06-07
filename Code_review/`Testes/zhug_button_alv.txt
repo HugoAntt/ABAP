@@ -1,0 +1,16 @@
+*&---------------------------------------------------------------------*
+*& Report ZHUG_BUTTON_ALV
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zhug_button_alv.
+*** Ini - HUGOANSILVA - TEXTO - 07.06.2024 10:51:58 ***
+
+CLASS lcl_main DEFINITION CREATE PRIVATE.
+
+  PUBLIC SECTION.
+    CLASS-METHODS create
+      RETURNING
+        VALUE(r_results) TYPE REF TO lcl_main.
+    
+*** Fim - HUGOANSILVA ***
