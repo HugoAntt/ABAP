@@ -79,6 +79,33 @@ oferecendo uma interface para criar, editar e manter classes ABAP de forma efici
 10. **SE14** - AJUSTAR TABELA:
     - Utilizado para realizar ajustes em tabelas de banco de dados no sistema SAP.
 
+11. **SE41** 
+     -A transação SE41 no SAP ABAP é usada para visualizar a hierarquia de estruturas de telas (telas de diálogo) no sistema. Ela fornece uma visão estruturada das telas e subscreens usados em programas ABAP.
+
+Principais recursos e funcionalidades da SE41:
+
+1. **Visualização da Hierarquia de Telas:**
+   Permite visualizar a estrutura hierárquica das telas de diálogo em um programa ABAP. Isso inclui telas principais, subscreens e seus relacionamentos.
+
+2. **Edição de Telas:**
+   Oferece recursos básicos de edição para telas de diálogo. Você pode adicionar, editar e excluir elementos de tela, como campos de entrada, textos, 
+botões e outros elementos de interface.
+
+3. **Navegação nas Telas:**
+   Permite navegar facilmente entre as telas e subscreens de um programa ABAP. Você pode visualizar os detalhes de cada tela e entender como elas se 
+relacionam umas com as outras.
+
+4. **Teste de Telas:**
+   Fornece a capacidade de testar as telas diretamente na transação SE41. Isso permite verificar a aparência e o comportamento das telas sem a 
+necessidade de executar o programa completo.
+
+5. **Geração Automática de Telas:**
+   Oferece opções para gerar automaticamente o código ABAP para telas de diálogo com base em modelos pré-definidos. Isso agiliza o processo de 
+criação de telas em programas ABAP.
+
+Em resumo, a transação SE41 é uma ferramenta essencial para o desenvolvimento e manutenção de programas ABAP que utilizam telas de diálogo para 
+interação com o usuário. Ela fornece uma visão estruturada das telas e subscreens, além de recursos para edição, navegação e teste de telas.
+
 
 Sobre as transações SE16 e SE11:
 
