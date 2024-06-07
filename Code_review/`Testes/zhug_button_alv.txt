@@ -13,7 +13,7 @@ CLASS lcl_main DEFINITION CREATE PRIVATE.
       RETURNING
         VALUE(r_results) TYPE REF TO lcl_main.
 
-    METHOD run.
+    METHODS run.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -22,28 +22,33 @@ ENDCLASS.
 
 CLASS lcl_main IMPLEMENTATION.
 
-METHOD create.
-  CREATE OBJECT r_result.
-ENDMETHOD.
-
-METHOD run.
-
-  SELECT *
-    UP TO 10 ROWS
-    FROM sflight
-    INTO TABLE @DATA(lt_voos).
-
-BREAK-POINT.
-
-    cl_salv_table=>factory{
-    IMPORTING
-  r_salv_table = DATA(alv_table)
-  CHANGING
-    t_table    =lt_voos.
-  }.
-
+  METHOD create.
+    CREATE OBJECT r_results.
   ENDMETHOD.
+
+  METHOD run.
+
+    SELECT *
+      UP TO 10 ROWS
+      FROM sflight
+      INTO TABLE @DATA(lt_voos).
+
+      BREAK-POINT.
+
+      cl_salv_table=>factory(
+        IMPORTING
+          r_salv_table = DATA(alv_table)
+        CHANGING
+          t_table    = lt_voos
+          ).
+
+      alv_table->display( ).
+
+      ENDMETHOD.
 ENDCLASS.
+
+START-OF-SELECTION.
+lcl_main=>create( )->run( ).
 
 "Método chama ALV"
 *** Fim - HUGOANSILVA ***
