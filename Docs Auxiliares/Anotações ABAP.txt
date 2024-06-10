@@ -7,6 +7,11 @@ Aqui estão as informações organizadas e detalhadas:
 
 **Ferramentas SAP ABAP:**
 
+
+Info sobre a Tela: pra colocar um botao no alav, é preciso ter um pf status, em lista de obejtos abre a visão da SE80, porem só achei sobre o status Gui, 
+não sei se o "pf status" pode funcionar sem o gui. Esse processo está diretamente ligado, à transação 41, que ja foi comentada abaixo. 
+
+
 ------------------------------------------------------------------
 Para verificar tabelas transparentes no SAP, você pode acionar a transação SE16 para ver seus registros e SE11 para ver seus campos e descrições.
 
