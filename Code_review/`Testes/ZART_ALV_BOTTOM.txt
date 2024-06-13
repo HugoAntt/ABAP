@@ -1,0 +1,184 @@
+[Tuesday 4:58 PM] Santos, Arthur Silva Fernandes dos
+*&---------------------------------------------------------------------*
+
+*& Report ZART_ALV_BOTTOM
+
+*&---------------------------------------------------------------------*
+
+*&
+
+*&---------------------------------------------------------------------*
+
+REPORT ZART_ALV_BOTTOM.
+
+DATA: obj_cust  TYPE REF TO cl_gui_custom_container,
+
+      obj_alv   TYPE REF TO cl_gui_alv_grid,
+
+      gt_vbak   TYPE TABLE OF vbak,
+
+      gs_vbak   TYPE vbak,
+
+      gt_vbap   TYPE TABLE OF vbap.
+
+CLASS lcl_int DEFINITION.
+
+  PUBLIC SECTION.
+
+    METHODS: on_dob FOR EVENT double_click OF cl_gui_alv_grid
+
+                      IMPORTING e_row e_column es_row_no,
+
+             add_toolbar_but FOR EVENT toolbar OF cl_gui_alv_grid
+
+                      IMPORTING e_object.
+
+ENDCLASS.
+
+CLASS lcl_int IMPLEMENTATION.
+
+  METHOD on_dob.
+
+    CLEAR: gs_vbak.
+
+    READ TABLE gt_vbak INTO gs_vbak INDEX es_row_no-row_id.
+
+    SELECT * FROM vbap INTO TABLE gt_vbap WHERE vbeln = gs_vbak-vbeln.
+
+    CALL SCREEN 200.
+
+  ENDMETHOD.
+
+  METHOD add_toolbar_but.
+
+    DATA: ls_but TYPE stb_button.
+
+    ls_but-function  = 'DOWN'.
+
+*    ls_but-icon      = 'ICON_TREND_DOWN'.
+
+    ls_but-icon      = 'ICON_CHECKED'.
+
+    ls_but-butn_type = 1.
+
+    ls_but-text      = 'Download'.
+
+    APPEND ls_but TO e_object->mt_toolbar.
+
+  ENDMETHOD.
+
+ENDCLASS.
+
+DATA: obj TYPE REF TO lcl_int.
+
+SELECT-OPTIONS: s_vbeln FOR gs_vbak-vbeln.
+
+START-OF-SELECTION.
+
+  CALL SCREEN 100.
+
+MODULE status_0100 OUTPUT.
+
+  IF obj_cust IS NOT BOUND.
+
+    CREATE OBJECT obj_cust
+
+      EXPORTING
+
+        container_name = 'CUST'
+
+      EXCEPTIONS
+
+        cntl_error                  = 1
+
+        cntl_system_error           = 2
+
+        create_error                = 3
+
+        lifetime_error              = 4
+
+        lifetime_dynpro_dynpro_link = 5
+
+        OTHERS                      = 6.
+
+    IF sy-subrc <> 0.
+
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+
+              WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+    ENDIF.
+
+  ENDIF.
+
+  IF obj_alv IS NOT BOUND.
+
+    CREATE OBJECT obj_alv
+
+      EXPORTING
+
+        i_parent = obj_cust
+
+      EXCEPTIONS
+
+        error_cntl_create = 1
+
+        error_cntl_init   = 2
+
+        error_cntl_link   = 3
+
+        error_dp_create   = 4
+
+        OTHERS            = 5.
+
+    IF sy-subrc <> 0.
+
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+
+              WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+    ENDIF.
+
+  ENDIF.
+
+  SELECT * FROM vbak INTO TABLE gt_vbak WHERE vbeln IN s_vbeln.
+
+  CREATE OBJECT obj.
+
+  SET HANDLER obj->on_dob FOR obj_alv.
+
+  SET HANDLER obj->add_toolbar_but FOR obj_alv.
+
+  CALL METHOD obj_alv->set_table_for_first_display
+
+    EXPORTING
+
+      i_structure_name = 'VBAK'
+
+    CHANGING
+
+      it_outtab        = gt_vbak.
+
+ENDMODULE.
+
+MODULE user_command_0100 INPUT.
+
+  CASE sy-ucomm.
+
+    WHEN 'DOWN'.
+
+      PERFORM download_data.
+
+    WHEN 'BACK' OR 'EXIT' OR 'CANCEL'.
+
+      LEAVE PROGRAM.
+
+  ENDCASE.
+
+ENDMODULE.
+
+FORM download_data.
+
+  " Implement the logic to download data
+
+ENDFORM.
