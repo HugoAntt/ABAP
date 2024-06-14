@@ -1,0 +1,45 @@
+Saas (Software com Serviço) - Cloud
+-Software as a Service" (Software como Serviço), é um modelo de distribuição de software onde os aplicativos são hospedados na nuvem e acessados
+pela internet. Em vez de adquirir e instalar software localmente em seus próprios computadores ou servidores, os usuários podem acessar o 
+software através de um navegador da web ou de uma interface de programação de aplicativos (API).
+
+-Permite acesso sem compra de licença
+
+EX: Alguns exemplos populares de aplicativos SaaS incluem o Microsoft Office 365, o Google Workspace (anteriormente conhecido como G Suite), 
+o Salesforce, o Dropbox e o Slack. Esses serviços oferecem uma variedade de funcionalidades, desde produtividade e colaboração até 
+gerenciamento de relacionamento com o cliente (CRM) e armazenamento de arquivos.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+PasS (Plataforma como Serviço)
+Platform as a Service" (Plataforma como Serviço) e é outro modelo de computação em nuvem, complementar ao SaaS. Enquanto o SaaS fornece 
+aplicativos prontos para uso pela internet, o PaaS oferece uma plataforma de desenvolvimento e implantação de aplicativos na nuvem. 
+Aqui estão alguns pontos-chave sobre o PaaS:
+
+Ambiente de desenvolvimento: Uma plataforma PaaS fornece um ambiente completo de desenvolvimento, incluindo ferramentas de desenvolvimento, 
+bibliotecas, frameworks e outras ferramentas necessárias para criar aplicativos. Isso permite que desenvolvedores construam e testem 
+aplicativos de forma rápida e eficiente.
+
+Gerenciamento de Infraestrutura: Com o PaaS, o provedor de serviços gerencia toda a infraestrutura subjacente, incluindo servidores, 
+armazenamento, rede e sistemas operacionais. Isso permite que os desenvolvedores se concentrem apenas no desenvolvimento de aplicativos, sem se 
+preocupar com a manutenção da infraestrutura.
+
+Ex: Exemplos de plataformas PaaS incluem o Microsoft Azure App Service, o Google App Engine, o Heroku, o AWS Elastic Beanstalk e o IBM Cloud 
+Foundry. Essas plataformas oferecem uma variedade de serviços e recursos para desenvolvedores construírem, implantarem e gerenciarem 
+aplicativos na nuvem.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+IaaS (Infrasestrutura como serviço)
+
+Serviços alugados, como: Servidores, Routers, racks, datacenters, hardware, dentre outras ferramentas que permitem a transmissão e o 
+armazenamento de dados. 
+
+A Empresa somente paga de acordo com sua necessidade. 
+
+Infrastructure as a Service" (Infraestrutura como Serviço). No modelo IaaS, os provedores de serviços de nuvem fornecem infraestrutura de 
+computação virtualizada pela internet.
+
+Ex:Exemplos de provedores de serviços de IaaS incluem o Amazon Web Services (AWS), o Microsoft Azure, o Google Cloud Platform (GCP), o IBM 
+Cloud e o Oracle Cloud Infrastructure (OCI). Esses provedores oferecem uma ampla gama de serviços e recursos para atender às necessidades de 
+computação, armazenamento e rede de organizações de todos os tamanhos e setores.
