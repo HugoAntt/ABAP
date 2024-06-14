@@ -43,3 +43,28 @@ computação virtualizada pela internet.
 Ex:Exemplos de provedores de serviços de IaaS incluem o Amazon Web Services (AWS), o Microsoft Azure, o Google Cloud Platform (GCP), o IBM 
 Cloud e o Oracle Cloud Infrastructure (OCI). Esses provedores oferecem uma ampla gama de serviços e recursos para atender às necessidades de 
 computação, armazenamento e rede de organizações de todos os tamanhos e setores.
+
+---------------------------------------------------------------------------------------------------
+
+SAP integration suite
+
+Pacote de produtos dentro do SAP BTP com foco em integração.
+
+Conectar e automatizar processos de negócios utilizando as capacidades do integration suite:
+
+API Management: Essa funcionalidade permite criar, publicar, gerenciar e monetizar APIs de forma centralizada. Com o API Management, as organizações podem 
+expor seus recursos de forma segura para parceiros, desenvolvedores externos e outras partes interessadas, além de controlar o acesso e monitorar o 
+desempenho das APIs.
+
+Connectivity: Este componente facilita a conexão de sistemas heterogêneos e distribuídos. Ele fornece uma variedade de adaptadores e conectores para 
+integrar aplicativos locais e na nuvem, além de oferecer suporte para diferentes protocolos de comunicação.
+
+Event Mesh: O Event Mesh permite o roteamento e o processamento de eventos em tempo real entre diferentes aplicativos e sistemas. Ele fornece uma 
+plataforma escalável para lidar com uma grande quantidade de eventos e permite a implementação de arquiteturas orientadas a eventos.
+
+
+oData Provisioning: Este recurso facilita a exposição de dados corporativos como serviços OData. Ele simplifica o acesso aos dados e permite que 
+aplicativos externos consumam dados de forma padronizada e segura.
+
+Cloud Integration (CPI): O Cloud Platform Integration (CPI) oferece recursos avançados para integrar aplicativos na nuvem e on-premise. Ele fornece 
+ferramentas de mapeamento de dados, transformação e roteamento para facilitar a integração de processos de negócios complexos.
