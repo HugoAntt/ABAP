@@ -60,11 +60,15 @@ Connectivity: Este componente facilita a conexão de sistemas heterogêneos e di
 integrar aplicativos locais e na nuvem, além de oferecer suporte para diferentes protocolos de comunicação.
 
 Event Mesh: O Event Mesh permite o roteamento e o processamento de eventos em tempo real entre diferentes aplicativos e sistemas. Ele fornece uma 
-plataforma escalável para lidar com uma grande quantidade de eventos e permite a implementação de arquiteturas orientadas a eventos.
+plataforma escalável para lidar coS uma grande quantidade de eventos e permite a implementação de arquiteturas orientadas a eventos.
 
 
 oData Provisioning: Este recurso facilita a exposição de dados corporativos como serviços OData. Ele simplifica o acesso aos dados e permite que 
 aplicativos externos consumam dados de forma padronizada e segura.
-
+SSS
 Cloud Integration (CPI): O Cloud Platform Integration (CPI) oferece recursos avançados para integrar aplicativos na nuvem e on-premise. Ele fornece 
 ferramentas de mapeamento de dados, transformação e roteamento para facilitar a integração de processos de negócios complexos.
+
+Apache camel 
+ 
+-Frameworkd de Integração de Sistemas.
