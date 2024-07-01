@@ -128,3 +128,40 @@ Facilitação da inovação através da rápida integração de novas tecnologia
   Complexidade na configuração inicial e personalização.
   Requer habilidades técnicas específicas para implementação e manutenção.
   Garantia da segurança dos dados durante o trânsito.
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+**Para o slide**
+
+A relação entre automação e inteligência artificial (IA) com SAP pode ser bastante significativa e abrange várias áreas dentro da plataforma SAP. 
+Aqui estão alguns pontos chave dessa relação:
+
+1. **Automatização de Processos de Negócio**:
+   - SAP oferece diversas ferramentas para automatização de processos de negócio, como SAP Intelligent Robotic Process Automation (SAP IRPA).
+ Essas ferramentas permitem automatizar tarefas repetitivas e manuais através da criação de bots que imitam a interação humana com sistemas SAP e não SAP.
+
+2. **IA e Machine Learning em SAP**:
+   - SAP incorpora IA e machine learning em várias soluções, como SAP Leonardo, SAP HANA, e SAP Analytics Cloud. Essas tecnologias são utilizadas para 
+análise de dados avançada, previsão, detecção de padrões, e otimização de processos.
+
+3. **Chatbots e Assistência Virtual**:
+   - SAP oferece soluções para desenvolvimento de chatbots e assistentes virtuais que utilizam IA para melhorar o suporte ao cliente, facilitar o 
+autoatendimento e automatizar consultas comuns.
+
+4. **Análise Preditiva e Prescritiva**:
+   - As capacidades analíticas avançadas do SAP, impulsionadas por IA, permitem às empresas realizar análises preditivas e prescritivas para melhorar a 
+omada de decisões estratégicas, identificar oportunidades de otimização e prever demandas futuras.
+
+5. **Manutenção Preditiva e IoT**:
+   - SAP utiliza IA para análise de dados provenientes de dispositivos IoT (Internet of Things) para oferecer manutenção preditiva. Isso ajuda as 
+empresas a prever falhas em equipamentos antes que ocorram, reduzindo custos de manutenção e aumentando a eficiência operacional.
+
+6. **Automação Inteligente de Finanças e Supply Chain**:
+   - SAP oferece soluções para automação inteligente de processos financeiros e de cadeia de suprimentos, utilizando IA para otimizar fluxos de trabalho, 
+detectar fraudes, melhorar a precisão das previsões financeiras e otimizar a gestão de inventário.
+
+7. **Integração de Dados e IA**:
+   - A integração de dados em tempo real facilitada pelo SAP HANA e outras soluções permite o uso eficiente de IA para análise de grandes volumes de dados,
+ fornecendo insights valiosos para tomada de decisões estratégicas.
+
+Esses pontos destacam como a combinação de automação e IA dentro do ecossistema SAP pode transformar digitalmente as operações empresariais, aumentando a 
+eficiência, melhorando a precisão e impulsionando a inovação.
