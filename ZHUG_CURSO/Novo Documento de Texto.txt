@@ -1,0 +1,9 @@
+Esses tipos só existem no meu ambiente, usei eles porque são exemplos mais fáceis de entender pois todo mundo sabe o que é uma venda e os itens de uma venda. Como o objetivo do vídeo não era ensinar a criar tabelas, não mostrei essa parte para não ficar um vídeo grande.
+
+Você pode basicamente fazer duas coisas para resolver o seu erro:
+- Criar as tabelas manualmente na SE11 com os mesmos campos que usei
+- Usar outras tabelas quaisquer que tem no seu ambiente, exemplo: Tabela de Aeroportos "sairport" e Tabela de Cliente "scustom"
+
+O vídeo onde ensino como criar tabelas é esse "Curso ABAP 051: Tabelas Transparentes (DDIC)" https://www.youtube.com/watch?v=rEcZxmnVFW0&ab_channel=MundoABAP
+
+Você pode ir lá assistir, criar as tabelas e voltar nesse depois. Apesar de tentar colocar os vídeos em uma sequência cronológica e crescente de dificuldade, no inicio de uma forma ou de outra, vai ter referências circulares se eu detalhar muito. Por exemplo, o conceito A usa o B e o B usa o A.
