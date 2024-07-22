@@ -1,0 +1,34 @@
+TYPES table_sflight TYPE TABLE OF sflight.: Define um tipo de tabela table_sflight baseado na estrutura sflight. Isso cria uma estrutura que pode armazenar múltiplas linhas do tipo sflight.
+DATA: sflight_area TYPE LINE OF table_sflight,: Define uma variável sflight_area que representa uma linha individual (LINE OF) da tabela table_sflight.
+DATA: table_sflight TYPE table_sflight.: Define a variável table_sflight como uma instância da tabela table_sflight, onde os dados serão armazenados.
+Início da Seleção de Dados
+abap
+Copy code
+START-OF-SELECTION.
+START-OF-SELECTION: Marca o início da seção onde a lógica principal do relatório é executada. Nesta seção, geralmente são realizadas consultas a banco de dados ou processamentos de dados.
+Manipulação da Tabela Interna table_sflight
+abap
+Copy code
+  sflight_area-carrid = 'AA'.
+  sflight_area-carrid = '0017'.
+  sflight_area-carrid = 20131122.
+  sflight_area-carrid = '100.11'.
+
+  APPEND sflight_area TO table_sflight.
+
+  sflight_area-carrid = 'AA'.
+  sflight_area-carrid = '0030'.
+  sflight_area-carrid = 89095422.
+  sflight_area-carrid = '100.12'.
+
+  APPEND sflight_area TO table_sflight.
+Aqui estão sendo preenchidos dados na variável sflight_area, que é uma linha da tabela table_sflight.
+sflight_area-carrid = ...: carrid é um campo da estrutura sflight. Os valores estão sendo atribuídos a sflight_area-carrid repetidamente, substituindo o valor anterior em cada linha.
+APPEND sflight_area TO table_sflight.: Adiciona a linha atual (sflight_area) à tabela interna table_sflight.
+Comentários
+abap
+Copy code
+*** Ini - HUGOANSILVA - TEXTO - 22.07.2024 15:52:15 ***
+Comentários como *** Ini ... *** são usados para marcar pontos de início (Ini) e fim (Fim) de seções do código. Eles servem para documentação e entendimento do desenvolvedor sobre o que cada parte do código faz ou representa.
+Conclusão
+O código fornecido é um exemplo simples de como declarar um relatório, definir uma estrutura de tabela interna (table_sflight) e preenchê-la com dados fictícios (sflight_area). No entanto, vale notar que os valores estão sendo sobregravados em sflight_area-carrid a cada atribuição, o que pode não ser o comportamento desejado dependendo do objetivo do programa.

@@ -1,0 +1,30 @@
+*&---------------------------------------------------------------------*
+*& Report ZGS_SFLIGHT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zgs_sflight.
+*** Ini - HUGOANSILVA - TEXTO - 22.07.2024 15:52:15 ***
+
+TYPES table_sflight TYPE TABLE OF sflight.
+DATA: sflight_area  TYPE LINE OF table_sflight,
+      table_sflight TYPE table_sflight.
+
+START-OF-SELECTION.
+
+  sflight_area-carrid = 'AA'.
+  sflight_area-carrid = '0017'.
+  sflight_area-carrid = 20131122.
+  sflight_area-carrid = '100.11'.
+
+  APPEND sflight_area TO table_sflight.
+
+  sflight_area-carrid = 'AA'.
+  sflight_area-carrid = '0030'.
+  sflight_area-carrid = 89095422.
+  sflight_area-carrid = '100.12'.
+
+  APPEND sflight_area TO table_sflight.
+
+
+*** Fim - HUGOANSILVA ***
