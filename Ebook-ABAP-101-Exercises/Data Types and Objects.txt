@@ -15,18 +15,24 @@ REPORT zdata_types_objects.
 *-Declare a type using the global structure SFLIGHT.
 *-Declare a structure type with the following components of the global structure SFLIGHT:
 *CARRID, CONNID, FLDATE, PRICE, CURRENCY, PLANETYPE, SEATSMAX and SEATSOCC.
-
 *-Declare a structure type with the following components of the global structure SBOOK:
 *CARRID, CONNID, FLDATE, BOOKID, CUSTOMID.
+*-Declare a table type of integers
 *-
-*-
+*include data_types_objects.sos
+INCLUDE data_types_objects.TOP
+
+TYPES table_type_with_number TYPE TABLE OF i.
 
 DATA: ld_n1 TYPE c LENGTH 10,
       ld_n2 TYPE i,
       ld_n3 TYPE n LENGTH 7,
       ld_n4 TYPE d,
       ld_n5 TYPE t,
-      lg_n6 TYPE sflight.
+      lg_n6 TYPE sflight,
+*     table type of integers
+      odd_numbers TYPE table_type_with_number,
+      even_numbers TYPE table_type_with_number.
 
 BREAK-POINT.
 
