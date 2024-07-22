@@ -72,5 +72,21 @@ TYPES: BEGIN OF ls_customer_structure,
          last_changed_at TYPE t,
        END OF ls_customer_structure.
 
+**Table type of integers
+START-OF-SELECTION.
+
+  APPEND: 1 TO odd_numbers,
+  3 TO odd_numbers,
+  5 TO odd_numbers,
+  7 TO odd_numbers,
+  9 TO odd_numbers.
+
+  APPEND: 2 TO even_numbers,
+  4 TO even_numbers,
+  6 TO even_numbers,
+  8 TO even_numbers,
+  10 TO even_numbers.
+
+
 
 *** Fim - HUGOANSILVA ***
