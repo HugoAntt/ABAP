@@ -34,8 +34,6 @@ DATA: ld_n1 TYPE c LENGTH 10,
       odd_numbers TYPE table_type_with_number,
       even_numbers TYPE table_type_with_number.
 
-BREAK-POINT.
-
 TYPES: BEGIN OF ls_sflight,
          carrid    TYPE sflight-carrid,
          connid    TYPE sflight-connid,
@@ -49,21 +47,29 @@ TYPES: BEGIN OF ls_sflight,
 
 BREAK-POINT.
 
-TYPES: BEGIN OF gs_sbook,
-         carrid   TYPE ls_sbook-carrid,
-         connid   TYPE ls_sbook-connid,
-         fldate   TYPE ls_sbook-fldate,
-         bookid   TYPE ls_sbook-bookid,
-         customid TYPE ls_sbook-customid,
-       END OF gs_sbook.
+TYPES: BEGIN OF flight_booking ,
+         carrid   TYPE sbook-carrid,
+         connid   TYPE sbook-connid,
+         fldate   TYPE sbook-fldate,
+         bookid   TYPE sbook-bookid,
+         customid TYPE sbook-customid,
+       END OF flight_booking.
 
+
+*TYPES: BEGIN OF ls_customer_structure,
+*         name            TYPE ld_n1,
+*         n_employees     LIKE ld_n2,
+*         unpaid_invoices TYPE ld_n3,
+*         creation_date   TYPE ld_n4,
+*         last_changed_at TYPE ld_n5,
+*       END OF ls_customer_structure.
 
 TYPES: BEGIN OF ls_customer_structure,
-         name            TYPE ld_n1,
+         name            LIKE ld_n1, "Like or Type?????
          n_employees     LIKE ld_n2,
-         unpaid_invoices TYPE ld_n3,
-         creation_date   TYPE ld_n4,
-         last_changed_at TYPE ld_n5,
+         unpaid_invoices TYPE n LENGTH 7,
+         creation_date   TYPE d,
+         last_changed_at TYPE t,
        END OF ls_customer_structure.
 
 
